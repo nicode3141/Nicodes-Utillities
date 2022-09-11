@@ -23,7 +23,7 @@ public class ModBlocks {
 
 
     //creates the Block "Block of Bitcoin"
-    public static final RegistryObject<Block> BLOCK_OF_BITCOIN = registerBlock("block_of_bitcoin.json",
+    public static final RegistryObject<Block> BLOCK_OF_BITCOIN = registerBlock("block_of_bitcoin",
             () -> new Block(AbstractBlock.Properties.create(Material.ROCK).harvestLevel(4).harvestTool(ToolType.PICKAXE).setRequiresTool().hardnessAndResistance(4f)));
 
 
