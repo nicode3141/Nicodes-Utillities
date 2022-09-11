@@ -1,5 +1,5 @@
 # Nicodes Utillities
-A Minecraft Mod with random items :).
+A Minecraft Mod with random items :)
 
 # Authors
 - nicode3141
