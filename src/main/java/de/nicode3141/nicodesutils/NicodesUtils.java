@@ -1,5 +1,6 @@
 package de.nicode3141.nicodesutils;
 
+import de.nicode3141.nicodesutils.block.ModBlocks;
 import de.nicode3141.nicodesutils.item.ModItems;
 import de.nicode3141.nicodesutils.world.structure.ModStructures;
 import net.minecraft.block.Block;
@@ -36,6 +37,7 @@ public class NicodesUtils
         IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         ModItems.register(eventBus);
+        ModBlocks.register(eventBus);
 
         ModStructures.register(eventBus);
 
