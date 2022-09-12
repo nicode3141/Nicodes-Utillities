@@ -21,18 +21,18 @@ public class ModBlocks {
     public static final DeferredRegister<Block> BLOCKS
             = DeferredRegister.create(ForgeRegistries.BLOCKS, NicodesUtils.MOD_ID);
 
-
     //creates the Block "Block of Bitcoin"
     public static final RegistryObject<Block> BLOCK_OF_BITCOIN = registerBlock("block_of_bitcoin",
-            () -> new Block(AbstractBlock.Properties.create(Material.ROCK).harvestLevel(4).harvestTool(ToolType.PICKAXE).setRequiresTool().hardnessAndResistance(4f)));
+            () -> new Block(AbstractBlock.Properties.create(Material.ROCK)
+                    .harvestLevel(4).harvestTool(ToolType.PICKAXE).setRequiresTool().hardnessAndResistance(4f)));
+
+
 
 
 
     private static <T extends Block>RegistryObject<T> registerBlock(String name, Supplier<T> block){
         RegistryObject<T> toReturn = BLOCKS.register(name, block);
-
         registerBlockItem(name, toReturn);
-
         return toReturn;
     }
 

@@ -36,6 +36,10 @@ public class ModItems {
 
 
 
+
+    //TODO:
+    //PEPSI,COCE
+
     //registry Event for Mod Items
     public static void register(IEventBus eventBus){
         ITEMS.register(eventBus);

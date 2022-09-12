@@ -1,5 +1,5 @@
 {
-  "parent": "block/cubal_all",
+  "parent": "block/cube_all",
   "textures": {
     "all": "nicodesutils:block/block_of_bitcoin"
   }
