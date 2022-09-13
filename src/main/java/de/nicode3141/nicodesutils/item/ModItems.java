@@ -1,8 +1,8 @@
 package de.nicode3141.nicodesutils.item;
 
 import de.nicode3141.nicodesutils.NicodesUtils;
+import de.nicode3141.nicodesutils.util.ModSoundEvents;
 import net.minecraft.item.*;
-import net.minecraftforge.common.ToolType;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
@@ -37,8 +37,8 @@ public class ModItems {
 
 
 
-    //TODO:
-    //PEPSI,COCE
+    //TODO @Headhott_TV:
+    //PEPSI;COCE;NEURALINK 2.0;DODGECOIN;BITCOIN;BRP ORB;POTION OF BRP;RING OF BRP;BRPP DINGS(ĵɫʫɸɶɻʂʧʨʭʔʘ)
 
     //registry Event for Mod Items
     public static void register(IEventBus eventBus){

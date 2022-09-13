@@ -1,10 +1,17 @@
 package de.nicode3141.nicodesutils;
 
+import com.google.common.collect.ImmutableMap;
 import de.nicode3141.nicodesutils.block.ModBlocks;
 import de.nicode3141.nicodesutils.item.ModItems;
-import de.nicode3141.nicodesutils.world.structure.ModStructures;
+import de.nicode3141.nicodesutils.util.ModSoundEvents;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.WoodType;
+import net.minecraft.entity.EntitySpawnPlacementRegistry;
+import net.minecraft.entity.monster.MonsterEntity;
+import net.minecraft.entity.passive.AnimalEntity;
+import net.minecraft.item.AxeItem;
+import net.minecraft.world.gen.Heightmap;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -39,7 +46,8 @@ public class NicodesUtils
         ModItems.register(eventBus);
         ModBlocks.register(eventBus);
 
-        ModStructures.register(eventBus);
+        ModSoundEvents.register(eventBus);
+
 
 
         eventBus.addListener(this::setup);
@@ -58,7 +66,7 @@ public class NicodesUtils
     {
         event.enqueueWork(() -> {
 
-        ModStructures.setupStructures();
+
 
         });
 

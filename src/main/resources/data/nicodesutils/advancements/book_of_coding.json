@@ -1,0 +1,26 @@
+{
+  "display": {
+    "icon": {
+      "item": "nicodesutils:book_of_coding"
+    },
+    "title": "Learning the Essentials",
+    "description": "Craft the Book of Coding",
+    "show_toast": true,
+    "frame": "challenge",
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "nicodesutils:nicodesutils_tab",
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "nicodesutils:book_of_coding"
+          }
+        ]
+      }
+    }
+  }
+}

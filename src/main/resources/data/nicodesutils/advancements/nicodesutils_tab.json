@@ -1,0 +1,24 @@
+{
+  "display": {
+    "icon": {
+      "item": "nicodesutils:artifact_of_code"
+    },
+    "title": "Nicodes Utils",
+    "description": "Ultimate Coding Tutorial",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "background": "minecraft:textures/block/block_of_netherite.png"
+  },
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "nicodesutils:artifact_of_code"
+          }
+        ]
+      }
+    }
+  }
+}

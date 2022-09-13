@@ -1,0 +1,10 @@
+{
+  "rickroll": {
+    "sounds": [
+      {
+        "name": "nicodesutils:rickroll",
+        "stream": true
+      }
+    ]
+  }
+}
