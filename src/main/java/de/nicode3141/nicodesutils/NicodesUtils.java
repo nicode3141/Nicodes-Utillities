@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import de.nicode3141.nicodesutils.block.ModBlocks;
 import de.nicode3141.nicodesutils.item.ModItems;
 import de.nicode3141.nicodesutils.util.ModSoundEvents;
+import de.nicode3141.nicodesutils.world.structure.ModStructures;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.WoodType;
@@ -46,6 +47,7 @@ public class NicodesUtils
         ModItems.register(eventBus);
         ModBlocks.register(eventBus);
 
+        ModStructures.register(eventBus);
         ModSoundEvents.register(eventBus);
 
 
@@ -65,7 +67,7 @@ public class NicodesUtils
     private void setup(final FMLCommonSetupEvent event)
     {
         event.enqueueWork(() -> {
-
+            ModStructures.setupStructures();
 
 
         });
