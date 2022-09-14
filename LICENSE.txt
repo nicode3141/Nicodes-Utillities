@@ -3,7 +3,7 @@ LINCENSE BY NICODEGMBH
 
 Hi, welcome to my License :).
 We are two young Devs tying to learn some code by creating this Minecraft Mod.
-We published this code to Github so you can hopefully learn how to make a Mod to.
+We published this code to Github so you can hopefully learn how to make a Mod too.
 But there are some rules.
 
 #### You're allowed to:
