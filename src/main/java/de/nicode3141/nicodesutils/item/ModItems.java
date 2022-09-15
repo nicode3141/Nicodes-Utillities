@@ -28,7 +28,7 @@ public class ModItems {
 
     //Registers the Item "advanced milk bucket"
     public static final RegistryObject<Item> ADVANCED_MILK_BUCKET = ITEMS.register("advanced_milk_bucket",
-            () -> new Item(new Item.Properties().group(ModItemGroup.NICODESUTILS_GROUP).rarity(Rarity.EPIC).containerItem(BUCKET).isImmuneToFire().maxStackSize(128)));
+            () -> new MilkBucketItem(new Item.Properties().group(ModItemGroup.NICODESUTILS_GROUP).rarity(Rarity.EPIC).containerItem(BUCKET).isImmuneToFire().maxStackSize(128)));
 
     //Registers the Item "brp sword"
     public static final RegistryObject<Item> BRP_SWORD = ITEMS.register("brp_sword",
@@ -38,7 +38,8 @@ public class ModItems {
 
 
     //TODO @Headhott_TV:
-    //PEPSI;COCE;NEURALINK 2.0;DODGECOIN;BITCOIN;BRP ORB;POTION OF BRP;RING OF BRP;BRPP DINGS(ĵɫʫɸɶɻʂʧʨʭʔʘ)
+    //;NEURALINK 2.0;POTION OF BRP;RING OF BRP;BRPP DINGS(ĵɫʫɸɶɻʂʧʨʭʔʘ);
+    //MOB:NOICH
 
     //registry Event for Mod Items
     public static void register(IEventBus eventBus){
