@@ -11,7 +11,11 @@
   "item.nicodesutils.bitcoin": "Bitcoin",
   "item.nicodesutils.brp_horse_armor": "Brp Horse Armor",
 
-  "block.nicodesutils.block_of_bitcoin": "Block of Bitcoin",
+  "block.nicodesutils.compressed_bitcoin": "Compressed Bitcoin",
+  "block.nicodesutils.enhanced_dirt": "Enhanced Dirt",
+  "block.nicodesutils.dirt_stairs": "Dirt Stairs",
+  "block.nicodesutils.item_shredder": "Item Shredder",
+  "screen.nicodesutils.item_shredder": "Item Shredder",
 
   "itemGroup.nicodesutilstab": "Nicodes Utillities"
 }

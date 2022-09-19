@@ -66,7 +66,7 @@ public class NicodesvillaStructure extends Structure<NoFeatureConfig> {
                                    NoFeatureConfig config) {
             int x = (chunkX << 4) + 7;
             int z = (chunkZ << 4) + 7;
-            BlockPos blockpos = new BlockPos(x, 0, z);
+            BlockPos blockpos = new BlockPos(x, -8, z);
 
             //addpieces()
             JigsawManager.func_242837_a(dynamicRegistryManager,

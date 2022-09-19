@@ -2,12 +2,16 @@ package de.nicode3141.nicodesutils;
 
 import com.google.common.collect.ImmutableMap;
 import de.nicode3141.nicodesutils.block.ModBlocks;
+import de.nicode3141.nicodesutils.container.ModContainers;
 import de.nicode3141.nicodesutils.item.ModItems;
+import de.nicode3141.nicodesutils.screen.ItemShredderScreen;
+import de.nicode3141.nicodesutils.tileentity.ModTileEntities;
 import de.nicode3141.nicodesutils.util.ModSoundEvents;
 import de.nicode3141.nicodesutils.world.structure.ModStructures;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.WoodType;
+import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.passive.AnimalEntity;
@@ -46,6 +50,8 @@ public class NicodesUtils
 
         ModItems.register(eventBus);
         ModBlocks.register(eventBus);
+        ModTileEntities.register(eventBus);
+        ModContainers.register(eventBus);
 
         ModStructures.register(eventBus);
         ModSoundEvents.register(eventBus);
@@ -80,7 +86,9 @@ public class NicodesUtils
 
     private void doClientStuff(final FMLClientSetupEvent event) {
         // do something that can only be done on the client
-
+        event.enqueueWork(() -> {
+            ScreenManager.registerFactory(ModContainers.ITEM_SHREDDER_CONTAINER.get(), ItemShredderScreen::new);
+        });
     }
 
     private void enqueueIMC(final InterModEnqueueEvent event)
