@@ -40,6 +40,7 @@ public class ItemShredderTile extends TileEntity {
     @Override
     public CompoundNBT write(CompoundNBT compound) {
         compound.put("inv", itemHandler.serializeNBT());
+
         return super.write(compound);
     }
 
