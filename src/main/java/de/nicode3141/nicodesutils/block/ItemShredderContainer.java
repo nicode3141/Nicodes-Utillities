@@ -33,8 +33,8 @@ public class ItemShredderContainer extends Container {
 
         if(tileEntity != null){
             this.tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h ->{
-                addSlot(new SlotItemHandler(h,0,80,31));
-                addSlot(new SlotItemHandler(h,1,80,53));
+                addSlot(new SlotItemHandler(h,0,80,13));
+                addSlot(new SlotItemHandler(h,1,80,57));
             });
         }
 

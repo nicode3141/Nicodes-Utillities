@@ -153,6 +153,14 @@ dependencies {
     dependencies {
         /* minecraft dependency is here */
 
+        compileOnly "mekanism:Mekanism:${mekanism_version}:api"
+
+        // If you want to test/use Mekanism & its modules during `runClient` invocation, use the following
+        runtimeOnly fg.deobf("mekanism:Mekanism:${mekanism_version}")// core
+        runtimeOnly fg.deobf("mekanism:Mekanism:${mekanism_version}:additions")// Mekanism: Additions
+        runtimeOnly fg.deobf("mekanism:Mekanism:${mekanism_version}:generators")// Mekanism: Generators
+        runtimeOnly fg.deobf("mekanism:Mekanism:${mekanism_version}:tools")// Mekanism: Tools
+
         // compile against the JEI API but do not include it at runtime
         compileOnly fg.deobf("mezz.jei:jei-1.16.5:7.7.1.152:api")
         // at runtime, use the full JEI jar
