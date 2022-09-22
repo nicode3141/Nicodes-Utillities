@@ -1,27 +1,24 @@
 package de.nicode3141.nicodesutils;
 
-import com.google.common.collect.ImmutableMap;
 import de.nicode3141.nicodesutils.block.ModBlocks;
 import de.nicode3141.nicodesutils.container.ModContainers;
+import de.nicode3141.nicodesutils.entity.ModEntityTypes;
+import de.nicode3141.nicodesutils.entity.render.RGBSheepRenderer;
 import de.nicode3141.nicodesutils.item.ModItems;
+import de.nicode3141.nicodesutils.paintings.ModPaintings;
 import de.nicode3141.nicodesutils.screen.ItemShredderScreen;
 import de.nicode3141.nicodesutils.tileentity.ModTileEntities;
 import de.nicode3141.nicodesutils.util.ModSoundEvents;
 import de.nicode3141.nicodesutils.world.structure.ModStructures;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.WoodType;
 import net.minecraft.client.gui.ScreenManager;
-import net.minecraft.entity.EntitySpawnPlacementRegistry;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.passive.AnimalEntity;
-import net.minecraft.item.AxeItem;
-import net.minecraft.world.gen.Heightmap;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.InterModComms;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -56,6 +53,9 @@ public class NicodesUtils
         ModStructures.register(eventBus);
         ModSoundEvents.register(eventBus);
 
+        ModPaintings.register(eventBus);
+        ModEntityTypes.register(eventBus);
+
 
 
         eventBus.addListener(this::setup);
@@ -89,6 +89,8 @@ public class NicodesUtils
         event.enqueueWork(() -> {
             ScreenManager.registerFactory(ModContainers.ITEM_SHREDDER_CONTAINER.get(), ItemShredderScreen::new);
         });
+        RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.BRP_SHEEP.get(), RGBSheepRenderer::new);
+
     }
 
     private void enqueueIMC(final InterModEnqueueEvent event)

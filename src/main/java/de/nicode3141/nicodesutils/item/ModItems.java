@@ -1,6 +1,8 @@
 package de.nicode3141.nicodesutils.item;
 
 import de.nicode3141.nicodesutils.NicodesUtils;
+import de.nicode3141.nicodesutils.entity.ModEntityTypes;
+import de.nicode3141.nicodesutils.item.custom.ModSpawnEggItem;
 import de.nicode3141.nicodesutils.util.ModSoundEvents;
 import net.minecraft.item.*;
 import net.minecraftforge.eventbus.api.IEventBus;

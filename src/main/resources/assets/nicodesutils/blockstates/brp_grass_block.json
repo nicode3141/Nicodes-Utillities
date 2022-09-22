@@ -1,0 +1,7 @@
+{
+    "variants": {
+      "": {
+        "model": "nicodesutils:block/brp_grass_block"
+      }
+    }
+}
