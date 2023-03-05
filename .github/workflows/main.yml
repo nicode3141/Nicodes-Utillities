@@ -1,4 +1,7 @@
-- name: Minecraft Architectury Tests
+- name: Minecraft Forge client startup test
   # You may pin to the exact commit or the version.
-  # uses: ValkyrienSkies/Minecraft-Architectury-Testing@de90e833bc49249ffe95069eae2207191d0ceb70
-  uses: ValkyrienSkies/Minecraft-Architectury-Testing@v1.7
+  # uses: Charismara/forge-client-startup-action@72c0b73092e0cafd98073053613e4cd0d174d11a
+  uses: Charismara/forge-client-startup-action@0.12
+  with:
+    # Url to clone the current repository
+    githubCloneUrl: 
