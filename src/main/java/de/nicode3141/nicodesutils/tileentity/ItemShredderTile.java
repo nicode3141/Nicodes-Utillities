@@ -2,13 +2,22 @@ package de.nicode3141.nicodesutils.tileentity;
 
 import de.nicode3141.nicodesutils.util.ModEnergyStorage;
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.ISidedInventory;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.INamedContainerProvider;
+import net.minecraft.item.BlockItemUseContext;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
@@ -28,14 +37,18 @@ public class ItemShredderTile extends TileEntity implements ITickableTileEntity 
 
     private final ItemStackHandler itemHandler = createHandler();
 
+    protected World level;
+
     private LazyOptional<IEnergyStorage> lazyEnergyHandler = LazyOptional.empty();
     private final LazyOptional<IItemHandler> handler = LazyOptional.of(() -> itemHandler);
 
     private int progress = 0;
-    private int maxPrograss = 10;
+    private int maxProgress = 10;
 
-    /*private final Map<Direction, LazyOptional<WrappedHandler>> directionWrappedHandlerMap =
-            Map.of(Direction.DOWN, LazyOptional.of(() -> new WrappedHandler(itemHandler, (i) -> i == 2, (i, s) -> false)),
+
+
+    //private final Map<Direction, LazyOptional<WrappedHandler>> directionWrappedHandlerMap =
+          /*
                     Direction.NORTH, LazyOptional.of(() -> new WrappedHandler(itemHandler, (index) -> index == 1,
                             (index, stack) -> itemHandler.isItemValid(1, stack))),
                     Direction.SOUTH, LazyOptional.of(() -> new WrappedHandler(itemHandler, (i) -> i == 2, (i, s) -> false)),
@@ -43,16 +56,21 @@ public class ItemShredderTile extends TileEntity implements ITickableTileEntity 
                             (index, stack) -> itemHandler.isItemValid(1, stack))),
                     Direction.WEST, LazyOptional.of(() -> new WrappedHandler(itemHandler, (index) -> index == 0 || index == 1,
                             (index, stack) -> itemHandler.isItemValid(0, stack) || itemHandler.isItemValid(1, stack))));
-
-     */
+*/
     private final ModEnergyStorage ENERGY_STORAGE = new ModEnergyStorage(60000,256) {
         @Override
         public void onEnergyChanged() {
             markDirty();
-
         }
+
+
+
     };
     private final int ENERGY_REQ = 32;
+
+    /*public BlockState getStateforPlacement(BlockItemUseContext context){
+        return null;
+    }*/
 
 
     public ItemShredderTile(TileEntityType<?> tileEntityTypeIn) {
@@ -148,6 +166,18 @@ public class ItemShredderTile extends TileEntity implements ITickableTileEntity 
         return super.getCapability(cap, side);
     }
 
+    private static boolean hasEnoughEnergy(ItemShredderTile itemShredderTile){
+        return itemShredderTile.ENERGY_STORAGE.getEnergyStored() >= itemShredderTile.ENERGY_REQ * itemShredderTile.maxProgress;
+    }
+
+    private static void shredderItem(ItemShredderTile itemShredderTile){
+        itemShredderTile.itemHandler.getStackInSlot(0).shrink(1);
+    }
+
+
+    public void resetProgress() {
+        this.progress = 0;
+    }
 
 /*
     public static void tick(World world, BlockPos pos, BlockState state, ItemShredderTile pTile) {
@@ -164,5 +194,35 @@ public class ItemShredderTile extends TileEntity implements ITickableTileEntity 
     @Override
     public void tick() {
 
+        if(!world.isRemote()){
+            return;
+        }
+
+        if(itemHandler.getStackInSlot(0).getCount() > 0){
+            ENERGY_STORAGE.receiveEnergy(64,false);
+        }
+
+        if(ENERGY_STORAGE.getEnergyStored() >= ENERGY_REQ * maxProgress) {
+            progress++;
+            ENERGY_STORAGE.extractEnergy(ENERGY_REQ,false);
+            markDirty();
+
+            if(progress < maxProgress) {
+                //maybe mistake ???
+                shredderItem(this);
+            }
+        }else {
+            resetProgress();
+            markDirty();
+        }
+
+
+
+    }
+
+    @Nullable
+
+    public Container createMenu(int p_createMenu_1_, PlayerInventory p_createMenu_2_, PlayerEntity p_createMenu_3_) {
+        return null;
     }
 }

@@ -15,8 +15,6 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
 
-import javax.annotation.Nullable;
-
 public class ItemShredderContainer extends Container {
     private final TileEntity tileEntity;
     private final PlayerEntity playerEntity;

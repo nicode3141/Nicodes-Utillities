@@ -22,6 +22,7 @@ public class WrappedHandler implements IItemHandlerModifiable {
         this.handler = handler;
         this.extract = extract;
         this.insert = insert;
+
     }
 
     @Override

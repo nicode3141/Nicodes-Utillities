@@ -2,6 +2,7 @@ package de.nicode3141.nicodesutils.world;
 
 import com.mojang.serialization.Codec;
 import de.nicode3141.nicodesutils.NicodesUtils;
+import de.nicode3141.nicodesutils.world.gen.ModOreGeneration;
 import de.nicode3141.nicodesutils.world.gen.ModStructureGeneration;
 import de.nicode3141.nicodesutils.world.structure.ModStructures;
 import net.minecraft.util.ResourceLocation;
@@ -29,7 +30,9 @@ public class ModWorldEvents {
 
     @SubscribeEvent
     public static void biomeLoadingEvent(final BiomeLoadingEvent event){
+        ModOreGeneration.generateOres(event);
         ModStructureGeneration.generateStructures(event);
+
 
     }
 

@@ -11,13 +11,27 @@
   "item.nicodesutils.bitcoin": "Bitcoin",
   "item.nicodesutils.brp_horse_armor": "Brp Horse Armor",
   "item.nicodesutils.rickroll_music_disc.desc": "Nicode - Strange",
+  "item.nicodesutils.brp_bow": "Brp Bow",
+  "item.nicodesutils.nickel_ingot": "Nickel Ingot",
+  "item.nicodesutils.lanathanum_ingot": "Lanathanum Ingot",
+  "item.nicodesutils.cobalt_ingot": "Cobalt Ingot",
 
   "block.nicodesutils.compressed_bitcoin": "Compressed Bitcoin",
   "block.nicodesutils.enhanced_dirt": "Enhanced Dirt",
   "block.nicodesutils.dirt_stairs": "Dirt Stairs",
   "block.nicodesutils.item_shredder": "Item Shredder",
-  "block.nicodesutils.brp_grass_block": "BRP Grass Block",
+  "block.nicodesutils.brp_grass_block": "Brp Grass Block",
+  "block.nicodesutils.brp_dirt": "Brp Dirt",
+  "block.nicodesutils.nicode_block": "Block Of Nicode",
   "screen.nicodesutils.item_shredder": "Item Sink",
+  "screen.nicodesutils.nicode_block": "Item Sink",
+  "block.nicodesutils.nickel_ore": "Nickel Ore",
+  "block.nicodesutils.nickel_block": "Nickel Block",
+  "block.nicodesutils.lanathanum_ore": "Lanathanum Ore",
+  "block.nicodesutils.lanathanum_block": "Lanathanum Block",
+  "block.nicodesutils.cobalt_ore": "Cobalt Ore",
+  "block.nicodesutils.cobalt_block": "Cobalt Block",
+
 
   "itemGroup.nicodesutilstab": "Nicodes Utillities"
 }

@@ -1,0 +1,25 @@
+{
+    "variants": {
+      "facing=east": {
+        "model": "nicodesutils:block/brp_teleporter",
+        "y": 90
+      },
+
+
+    "facing=north": {
+      "model": "nicodesutils:block/brp_teleporter"
+    },
+
+
+    "facing=south": {
+      "model": "nicodesutils:block/brp_teleporter",
+      "y": 180
+    },
+
+
+    "facing=west": {
+      "model": "nicodesutils:block/brp_teleporter",
+      "y": 270
+    }
+  }
+}

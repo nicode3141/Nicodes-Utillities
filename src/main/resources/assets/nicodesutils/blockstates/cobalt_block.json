@@ -1,0 +1,7 @@
+{
+    "variants": {
+      "": {
+        "model": "nicodesutils:block/cobalt_block"
+      }
+    }
+}

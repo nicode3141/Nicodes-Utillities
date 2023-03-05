@@ -3,6 +3,7 @@ package de.nicode3141.nicodesutils.item;
 import de.nicode3141.nicodesutils.NicodesUtils;
 import de.nicode3141.nicodesutils.entity.ModEntityTypes;
 import de.nicode3141.nicodesutils.item.custom.ModSpawnEggItem;
+import de.nicode3141.nicodesutils.item.custom.VarXItem;
 import de.nicode3141.nicodesutils.util.ModSoundEvents;
 import net.minecraft.item.*;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -34,9 +35,66 @@ public class ModItems {
 
     //Registers the Item "brp sword"
     public static final RegistryObject<Item> BRP_SWORD = ITEMS.register("brp_sword",
-            () -> new SwordItem(ModItemTier.BRPSWORD, 10,0.5f ,new Item.Properties().group(ModItemGroup.NICODESUTILS_GROUP).rarity(Rarity.EPIC)));
+            () -> new SwordItem(ModItemTier.BRPSWORD, 99,0.0001f ,new Item.Properties().group(ModItemGroup.NICODESUTILS_GROUP).rarity(Rarity.EPIC)));
 
+    //Registers the Item "rickroll music disc"
+    public static final RegistryObject<Item> RICKROLL_MUSIC_DISC = ITEMS.register("rickroll_music_disc",
+            () -> new MusicDiscItem(1,() -> ModSoundEvents.RICKROLL.get(),
+                    new Item.Properties().group(ModItemGroup.NICODESUTILS_GROUP).maxStackSize(1)));
 
+    //Registers the Item "COLA"
+    public static final RegistryObject<Item> COLA = ITEMS.register("cola",
+            () -> new HoneyBottleItem(new Item.Properties().group(ModItemGroup.NICODESUTILS_GROUP)));
+
+    //Registers the Item "brp orb"
+    public static final RegistryObject<Item> BRP_ORB = ITEMS.register("brp_orb",
+            () -> new Item(new Item.Properties().group(ModItemGroup.NICODESUTILS_GROUP)));
+
+    //Registers the Item "robux"
+    public static final RegistryObject<Item> ROBUX = ITEMS.register("robux",
+            () -> new Item(new Item.Properties().group(ModItemGroup.NICODESUTILS_GROUP)));
+
+    //Registers the Item "dodgecoin"
+    public static final RegistryObject<Item> DODGECOIN = ITEMS.register("dodgecoin",
+            () -> new Item(new Item.Properties().group(ModItemGroup.NICODESUTILS_GROUP)));
+
+    //Registers the Item "bitcoin"
+    public static final RegistryObject<Item> BITCOIN = ITEMS.register("bitcoin",
+            () -> new Item(new Item.Properties().group(ModItemGroup.NICODESUTILS_GROUP)));
+
+    //Registers the Item "brp horse armor"
+    public static final RegistryObject<Item> BRP_HORSE_ARMOR = ITEMS.register("brp_horse_armor",
+            () -> new HorseArmorItem(17,"brp",
+                    new Item.Properties().group(ModItemGroup.NICODESUTILS_GROUP)));
+
+    //Registers the Item "neuralink 2.0"
+    public static final RegistryObject<Item> NEURALINK = ITEMS.register("neuralink",
+            () -> new Item(new Item.Properties().group(ModItemGroup.NICODESUTILS_GROUP).food(ModFood.Neuralink)));
+
+    //Registers the Item "neuralink 2.0"
+    public static final RegistryObject<Item> RGBSHEEP_SPAWN_EGG = ITEMS.register("rbgsheep_spawn_egg",
+            () -> new ModSpawnEggItem(ModEntityTypes.BRP_SHEEP, 0x464F56, 0x1066336,
+                    new Item.Properties().group(ModItemGroup.NICODESUTILS_GROUP)));
+
+    //Registers the Item "neuralink 2.0"
+    public static final RegistryObject<Item> BRPBOW = ITEMS.register("brp_bow",
+            () -> new BowItem(new Item.Properties().group(ModItemGroup.NICODESUTILS_GROUP).maxStackSize(1)));
+
+    //Registers the Item "ĵɫʫɸɶɻʂʧʨʭʔʘ" (VarX)
+    public static final RegistryObject<Item> VARX = ITEMS.register("varx",
+            () -> new VarXItem(new Item.Properties().group(ModItemGroup.NICODESUTILS_GROUP)));
+
+    //Registers the Item "ĵɫʫɸɶɻʂʧʨʭʔʘ" (VarX)
+    public static final RegistryObject<Item> NICKEL_INGOT = ITEMS.register("nickel_ingot",
+            () -> new Item(new Item.Properties().group(ModItemGroup.NICODESUTILS_GROUP)));
+
+    //Registers the Item "ĵɫʫɸɶɻʂʧʨʭʔʘ" (VarX)
+    public static final RegistryObject<Item> LANATHANUM_INGOT = ITEMS.register("lanathanum_ingot",
+            () -> new Item(new Item.Properties().group(ModItemGroup.NICODESUTILS_GROUP)));
+
+    //Registers the Item "ĵɫʫɸɶɻʂʧʨʭʔʘ" (VarX)
+    public static final RegistryObject<Item> COBALT_INGOT = ITEMS.register("cobalt_ingot",
+            () -> new Item(new Item.Properties().group(ModItemGroup.NICODESUTILS_GROUP)));
 
 
     //TODO @Headhott_TV:

@@ -3,9 +3,7 @@ package de.nicode3141.nicodesutils.entity.custom;
 import com.google.common.collect.ImmutableSet;
 import de.nicode3141.nicodesutils.NicodesUtils;
 import de.nicode3141.nicodesutils.block.ModBlocks;
-import de.nicode3141.nicodesutils.util.ModSoundEvents;
 import net.minecraft.entity.merchant.villager.VillagerProfession;
-import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.village.PointOfInterestType;
 import net.minecraftforge.fml.RegistryObject;
@@ -26,7 +24,7 @@ public class ModVillager {
             () -> new PointOfInterestType("noich_villager", PointOfInterestType.getAllStates(ModBlocks.COMPRESSED_BITCOIN.get()), 1, 1));
 
     public static final RegistryObject<VillagerProfession> NOICH_PROFESSION = VILLAGER_PROFESSIONS.register("noich_villager",
-            () -> new VillagerProfession("noich_villager", NOICH_POI.get(), ImmutableSet.of(), ImmutableSet.of(), SoundEvents.ENTITY_VILLAGER_WORK_LEATHERWORKER));
+            () -> new VillagerProfession("noich_villager", NOICH_POI.get(), ImmutableSet.of(), ImmutableSet.of(), SoundEvents.UI_TOAST_IN));
 
     public static void registerPOI() {
         try {

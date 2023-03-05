@@ -1,0 +1,25 @@
+{
+    "variants": {
+      "facing=east": {
+        "model": "nicodesutils:block/nicode",
+        "y": 90
+      },
+
+
+    "facing=north": {
+      "model": "nicodesutils:block/nicode"
+    },
+
+
+    "facing=south": {
+      "model": "nicodesutils:block/nicode",
+      "y": 180
+    },
+
+
+    "facing=west": {
+      "model": "nicodesutils:block/nicode",
+      "y": 270
+    }
+  }
+}

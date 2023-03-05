@@ -1,0 +1,13 @@
+{
+  "type": "nicodesutils:brpdim",
+  "generator": {
+    "type": "minecraft:noise",
+    "seed": -1151449607,
+    "settings": "minecraft:overworld",
+    "biome_source": {
+      "type": "minecraft:fixed",
+      "seed": -2048856837,
+      "biome": "minecraft:plains"
+    }
+  }
+}

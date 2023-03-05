@@ -8,12 +8,17 @@ import de.nicode3141.nicodesutils.entity.render.RGBSheepRenderer;
 import de.nicode3141.nicodesutils.item.ModItems;
 import de.nicode3141.nicodesutils.paintings.ModPaintings;
 import de.nicode3141.nicodesutils.screen.ItemShredderScreen;
+import de.nicode3141.nicodesutils.screen.NicodeBlockScreen;
 import de.nicode3141.nicodesutils.tileentity.ModTileEntities;
+import de.nicode3141.nicodesutils.util.ModItemModelProperties;
 import de.nicode3141.nicodesutils.util.ModSoundEvents;
+import de.nicode3141.nicodesutils.world.biome.ModBiomes;
 import de.nicode3141.nicodesutils.world.structure.ModStructures;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.gui.ScreenManager;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -53,6 +58,8 @@ public class NicodesUtils
 
         ModStructures.register(eventBus);
         ModSoundEvents.register(eventBus);
+        ModBiomes.register(eventBus);
+
 
         ModPaintings.register(eventBus);
         ModEntityTypes.register(eventBus);
@@ -91,9 +98,11 @@ public class NicodesUtils
         // do something that can only be done on the client
         event.enqueueWork(() -> {
             ScreenManager.registerFactory(ModContainers.ITEM_SHREDDER_CONTAINER.get(), ItemShredderScreen::new);
+            ScreenManager.registerFactory(ModContainers.NICODE_BLOCK_CONTAINER.get(), NicodeBlockScreen::new);
+            RenderTypeLookup.setRenderLayer(ModBlocks.NICODE_BLOCK.get(), RenderType.getCutout());
         });
         RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.BRP_SHEEP.get(), RGBSheepRenderer::new);
-
+        ModItemModelProperties.makeBow(ModItems.BRPBOW.get());
     }
 
     private void enqueueIMC(final InterModEnqueueEvent event)

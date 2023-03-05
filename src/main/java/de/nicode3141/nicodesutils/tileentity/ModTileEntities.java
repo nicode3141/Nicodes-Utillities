@@ -17,6 +17,10 @@ public class ModTileEntities {
             TILE_ENTITIES.register("item_shredder_tile", () -> TileEntityType.Builder.create(
                     ItemShredderTile:: new , ModBlocks.ITEM_SHREDDER.get()).build(null));
 
+    public static RegistryObject<TileEntityType<NicodeBlockTile>> NICODE_BLOCK_TILE =
+            TILE_ENTITIES.register("nicode_block_tile", () -> TileEntityType.Builder.create(
+                    NicodeBlockTile:: new , ModBlocks.NICODE_BLOCK.get()).build(null));
+
     public static void register(IEventBus eventBus) {
         TILE_ENTITIES.register(eventBus);
     }
