@@ -20,16 +20,13 @@ import net.minecraftforge.registries.ForgeRegistries;
 import org.slf4j.Logger;
 
 // The value here should match an entry in the META-INF/mods.toml file
-@Mod(nicodesUtils.MODID)
+@Mod(nicodesUtils.MOD_ID)
 public class nicodesUtils
 {
     // Define mod id in a common place for everything to reference
-    public static final String MODID = "nicodesutils";
+    public static final String MOD_ID = "nicodesutils";
     // Directly reference a slf4j logger
     private static final Logger LOGGER = LogUtils.getLogger();
-
-
-    // Creates a new Block with the id "nicodesutils:example_block", combining the namespace and path
 
     public nicodesUtils()
     {
@@ -40,33 +37,17 @@ public class nicodesUtils
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
-
-        // Register the item to a creative tab
-        modEventBus.addListener(this::addCreative);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event)
     {
         // Some common setup code
         LOGGER.info("HELLO FROM COMMON SETUP");
-
     }
 
-    private void addCreative(CreativeModeTabEvent.BuildContents event)
-    {
-
-    }
-
-    // You can use SubscribeEvent and let the Event Bus discover methods to call
-    @SubscribeEvent
-    public void onServerStarting(ServerStartingEvent event)
-    {
-        // Do something when the server starts
-        LOGGER.info("HELLO from server starting");
-    }
 
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
-    @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+    @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ClientModEvents
     {
         @SubscribeEvent
