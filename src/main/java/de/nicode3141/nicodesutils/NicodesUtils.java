@@ -2,6 +2,7 @@ package de.nicode3141.nicodesutils;
 
 import com.mojang.logging.LogUtils;
 import de.nicode3141.nicodesutils.block.ModBlocks;
+import de.nicode3141.nicodesutils.item.ModCreativeModeTab;
 import de.nicode3141.nicodesutils.item.ModItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.item.CreativeModeTabs;
@@ -48,7 +49,7 @@ public class NicodesUtils
     }
 
     private void addCreative(CreativeModeTabEvent.BuildContents event) {
-        if(event.getTab() == CreativeModeTabs.INGREDIENTS) {
+        if(event.getTab() == ModCreativeModeTab.NICODESUTIL_TAB) {
             event.accept(ModItems.HYDROGEN_BUCKET);
             event.accept(ModBlocks.ELECTROLYSIS_CHAMBER);
         }
