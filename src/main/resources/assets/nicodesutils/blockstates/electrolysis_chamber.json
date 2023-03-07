@@ -1,0 +1,5 @@
+{
+  "variants": {
+    "" : {"model" : "nicodesutils:block/electrolysis_chamber"}
+  }
+}

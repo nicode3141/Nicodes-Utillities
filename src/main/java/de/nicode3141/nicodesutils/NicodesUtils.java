@@ -1,6 +1,7 @@
 package de.nicode3141.nicodesutils;
 
 import com.mojang.logging.LogUtils;
+import de.nicode3141.nicodesutils.block.ModBlocks;
 import de.nicode3141.nicodesutils.item.ModItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.item.CreativeModeTabs;
@@ -29,6 +30,7 @@ public class NicodesUtils
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         ModItems.register(modEventBus);
+        ModBlocks.register(modEventBus);
 
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
@@ -48,6 +50,7 @@ public class NicodesUtils
     private void addCreative(CreativeModeTabEvent.BuildContents event) {
         if(event.getTab() == CreativeModeTabs.INGREDIENTS) {
             event.accept(ModItems.HYDROGEN_BUCKET);
+            event.accept(ModBlocks.ELECTROLYSIS_CHAMBER);
         }
     }
 

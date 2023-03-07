@@ -1,3 +1,4 @@
 {
-  "item.nicodesutils.hydrogen_bucket" : "Bucket of Hydrogen"
+  "item.nicodesutils.hydrogen_bucket" : "Bucket of Hydrogen",
+  "block.nicodesutils.electrolysis_chamber" : "Electrolysis Chamber"
 }
