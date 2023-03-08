@@ -2,9 +2,13 @@ package de.nicode3141.nicodesutils;
 
 import com.mojang.logging.LogUtils;
 import de.nicode3141.nicodesutils.block.ModBlocks;
+import de.nicode3141.nicodesutils.block.entity.ModBlockEntities;
 import de.nicode3141.nicodesutils.item.ModCreativeModeTab;
 import de.nicode3141.nicodesutils.item.ModItems;
+import de.nicode3141.nicodesutils.screen.ElectrolysisChamberScreen;
+import de.nicode3141.nicodesutils.screen.ModMenuTypes;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
@@ -32,6 +36,10 @@ public class NicodesUtils
 
         ModItems.register(modEventBus);
         ModBlocks.register(modEventBus);
+
+        ModBlockEntities.register(modEventBus);
+
+        ModMenuTypes.register(modEventBus);
 
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
@@ -63,9 +71,7 @@ public class NicodesUtils
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event)
         {
-            // Some client setup code
-            LOGGER.info("HELLO FROM CLIENT SETUP");
-            LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
+            MenuScreens.register(ModMenuTypes.ELECTROLYSIS_CHAMBER_MENU.get(), ElectrolysisChamberScreen::new);
         }
     }
 }

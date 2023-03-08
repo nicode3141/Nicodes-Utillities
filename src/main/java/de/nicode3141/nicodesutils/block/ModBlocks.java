@@ -1,6 +1,7 @@
 package de.nicode3141.nicodesutils.block;
 
 import de.nicode3141.nicodesutils.NicodesUtils;
+import de.nicode3141.nicodesutils.block.custom.ElectrolysisChamberBlock;
 import de.nicode3141.nicodesutils.item.ModItems;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
@@ -21,7 +22,7 @@ public class ModBlocks {
 
 
     public static final RegistryObject<Block> ELECTROLYSIS_CHAMBER = registerBlock("electrolysis_chamber",
-            ()-> new Block(BlockBehaviour.Properties.of(Material.STONE)
+            ()-> new ElectrolysisChamberBlock(BlockBehaviour.Properties.of(Material.STONE)
                     .strength(6f).requiresCorrectToolForDrops()));
 
 
