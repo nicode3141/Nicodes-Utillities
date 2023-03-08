@@ -106,6 +106,7 @@ public class ElectrolysisChamberBlockEntity extends BlockEntity implements MenuP
     @Override
     protected void saveAdditional(CompoundTag nbt) {
         nbt.put("inventory", itemHandler.serializeNBT());
+        nbt.putInt("electrolysis_chamber.progress", this.progress);
 
         super.saveAdditional(nbt);
     }
@@ -114,6 +115,8 @@ public class ElectrolysisChamberBlockEntity extends BlockEntity implements MenuP
     public void load(CompoundTag nbt) {
         super.load(nbt);
         itemHandler.deserializeNBT(nbt.getCompound("inventory"));
+
+        progress = nbt.getInt("electrolysis_chamber.progress");
     }
 
     public void drops(){

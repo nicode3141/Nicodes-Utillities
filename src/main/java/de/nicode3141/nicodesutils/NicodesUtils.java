@@ -3,6 +3,8 @@ package de.nicode3141.nicodesutils;
 import com.mojang.logging.LogUtils;
 import de.nicode3141.nicodesutils.block.ModBlocks;
 import de.nicode3141.nicodesutils.block.entity.ModBlockEntities;
+import de.nicode3141.nicodesutils.config.NicodesUtilsClientConfigs;
+import de.nicode3141.nicodesutils.config.NicodesUtilsCommonConfigs;
 import de.nicode3141.nicodesutils.item.ModCreativeModeTab;
 import de.nicode3141.nicodesutils.item.ModItems;
 import de.nicode3141.nicodesutils.screen.ElectrolysisChamberScreen;
@@ -15,7 +17,9 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.CreativeModeTabEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -41,13 +45,15 @@ public class NicodesUtils
 
         ModMenuTypes.register(modEventBus);
 
+
+        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, NicodesUtilsClientConfigs.SPEC,"nicodesutils-client.toml");
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, NicodesUtilsCommonConfigs.SPEC,"nicodesutils-common.toml");
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
+        modEventBus.addListener(this::addCreative);
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
-
-        modEventBus.addListener(this::addCreative);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event)
