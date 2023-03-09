@@ -1,0 +1,6 @@
+{
+  "parent": "nicodesutils:block/machine",
+  "textures": {
+    "down": "nicodesutils:/block/base"
+  }
+}

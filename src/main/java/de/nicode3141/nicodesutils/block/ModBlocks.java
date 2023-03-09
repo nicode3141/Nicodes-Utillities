@@ -2,6 +2,7 @@ package de.nicode3141.nicodesutils.block;
 
 import de.nicode3141.nicodesutils.NicodesUtils;
 import de.nicode3141.nicodesutils.block.custom.ElectrolysisChamberBlock;
+import de.nicode3141.nicodesutils.item.ModCreativeModeTab;
 import de.nicode3141.nicodesutils.item.ModItems;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
@@ -23,19 +24,20 @@ public class ModBlocks {
 
     public static final RegistryObject<Block> ELECTROLYSIS_CHAMBER = registerBlock("electrolysis_chamber",
             ()-> new ElectrolysisChamberBlock(BlockBehaviour.Properties.of(Material.STONE)
-                    .strength(6f).requiresCorrectToolForDrops()));
+                    .strength(6f).requiresCorrectToolForDrops()), ModCreativeModeTab.NICODESUTILS_TAB);
 
 
 
 
-    private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block){
+    private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block, CreativeModeTab tab){
         RegistryObject<T> toReturn = BLOCKS.register(name, block);
-        registerBlockItem(name,toReturn);
+        registerBlockItem(name,toReturn,tab);
         return toReturn;
     }
 
-    private static <T extends Block> RegistryObject<Item> registerBlockItem(String name,RegistryObject<T> block){
-        return ModItems.ITEMS.register(name, ()-> new BlockItem(block.get(), new Item.Properties()));
+    private static <T extends Block> RegistryObject<Item> registerBlockItem(String name,RegistryObject<T> block,
+                                                                            CreativeModeTab tab){
+        return ModItems.ITEMS.register(name, ()-> new BlockItem(block.get(), new Item.Properties().tab(ModCreativeModeTab.NICODESUTILS_TAB)));
     }
 
     public static void register(IEventBus eventBus){

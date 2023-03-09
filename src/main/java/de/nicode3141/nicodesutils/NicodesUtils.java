@@ -11,10 +11,8 @@ import de.nicode3141.nicodesutils.screen.ElectrolysisChamberScreen;
 import de.nicode3141.nicodesutils.screen.ModMenuTypes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
-import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.CreativeModeTabEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -50,8 +48,8 @@ public class NicodesUtils
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, NicodesUtilsCommonConfigs.SPEC,"nicodesutils-common.toml");
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
-        modEventBus.addListener(this::addCreative);
 
+        // modEventBus.addListener(this::addCreative);
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
     }
@@ -62,12 +60,6 @@ public class NicodesUtils
         LOGGER.info("HELLO FROM COMMON SETUP");
     }
 
-    private void addCreative(CreativeModeTabEvent.BuildContents event) {
-        if(event.getTab() == ModCreativeModeTab.NICODESUTIL_TAB) {
-            event.accept(ModItems.HYDROGEN_BUCKET);
-            event.accept(ModBlocks.ELECTROLYSIS_CHAMBER);
-        }
-    }
 
 
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent

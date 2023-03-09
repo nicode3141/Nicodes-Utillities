@@ -1,5 +1,19 @@
 {
   "variants": {
-    "" : {"model" : "nicodesutils:block/electrolysis_chamber"}
+    "facing=north": {
+      "model": "nicodesutils:block/electrolysis_chamber"
+    },
+    "facing=south": {
+      "model": "nicodesutils:block/electrolysis_chamber",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "nicodesutils:block/electrolysis_chamber",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "nicodesutils:block/electrolysis_chamber",
+      "y": -90
+    }
   }
 }

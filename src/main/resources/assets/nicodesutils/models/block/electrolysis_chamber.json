@@ -1,6 +1,11 @@
 {
-  "parent": "block/cube_all",
+  "parent": "nicodesutils:block/base",
   "textures": {
-    "all": "nicodesutils:block/electrolysis_chamber"
+    "sides": "nicodesutils:block/electrolysis_chamber/side",
+    "front": "nicodesutils:block/electrolysis_chamber/front",
+    "south": "nicodesutils:block/electrolysis_chamber/back",
+    "west": "nicodesutils:block/electrolysis_chamber/side",
+    "east": "nicodesutils:block/electrolysis_chamber/side",
+    "up": "nicodesutils:block/electrolysis_chamber/top"
   }
 }

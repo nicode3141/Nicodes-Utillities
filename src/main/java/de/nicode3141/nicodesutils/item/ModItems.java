@@ -1,6 +1,7 @@
 package de.nicode3141.nicodesutils.item;
 
 import de.nicode3141.nicodesutils.NicodesUtils;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -14,7 +15,7 @@ public class ModItems {
     //------------------------------------------------------------------------------------------------------------------
 
     public static final RegistryObject<Item> HYDROGEN_BUCKET = ITEMS.register("hydrogen_bucket",
-            () -> new Item(new Item.Properties()));
+            () -> new Item(new Item.Properties().tab(ModCreativeModeTab.NICODESUTILS_TAB)));
 
 
 
