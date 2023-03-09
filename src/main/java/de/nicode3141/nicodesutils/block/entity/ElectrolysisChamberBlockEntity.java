@@ -30,6 +30,9 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.EnergyStorage;
 import net.minecraftforge.energy.IEnergyStorage;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.IFluidTank;
+import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
@@ -63,6 +66,18 @@ public class ElectrolysisChamberBlockEntity extends BlockEntity implements MenuP
         }
     };
     private static final int ENERGY_REQ = 32;
+
+    private final FluidTank FLUID_TANK = new FluidTank(64000) {
+        @Override
+        protected void onContentsChanged() {
+            super.onContentsChanged();
+        }
+
+        @Override
+        public boolean isFluidValid(FluidStack stack) {
+            return super.isFluidValid(stack);
+        }
+    };
 
     private LazyOptional<IItemHandler> lazyItemHandler = LazyOptional.empty();
 
