@@ -2,6 +2,7 @@ package de.nicode3141.nicodesutils.screen;
 
 import de.nicode3141.nicodesutils.block.ModBlocks;
 import de.nicode3141.nicodesutils.block.entity.ElectrolysisChamberBlockEntity;
+import net.minecraft.commands.arguments.coordinates.Coordinates;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -9,9 +10,8 @@ import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.SlotItemHandler;
-import org.jetbrains.annotations.Nullable;
 
 public class ElectrolysisChamberMenu extends AbstractContainerMenu {
     public final ElectrolysisChamberBlockEntity blockEntity;
@@ -32,7 +32,7 @@ public class ElectrolysisChamberMenu extends AbstractContainerMenu {
         addPlayerInventory(inv);
         addPlayerHotbar(inv);
 
-        this.blockEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
+        this.blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(handler -> {
             this.addSlot(new SlotItemHandler(handler,0,12,15)); // Slots Position
             this.addSlot(new SlotItemHandler(handler,1,12,30));
             this.addSlot(new SlotItemHandler(handler,2,12,45));
@@ -42,6 +42,10 @@ public class ElectrolysisChamberMenu extends AbstractContainerMenu {
 
     public boolean isCrafting(){
         return data.get(0) > 0;
+    }
+
+    public ElectrolysisChamberBlockEntity getBlockEntity() {
+        return  this.blockEntity;
     }
 
     public int getScaledProgress(){

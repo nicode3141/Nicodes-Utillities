@@ -7,6 +7,7 @@ import de.nicode3141.nicodesutils.config.NicodesUtilsClientConfigs;
 import de.nicode3141.nicodesutils.config.NicodesUtilsCommonConfigs;
 import de.nicode3141.nicodesutils.item.ModCreativeModeTab;
 import de.nicode3141.nicodesutils.item.ModItems;
+import de.nicode3141.nicodesutils.networking.ModMessages;
 import de.nicode3141.nicodesutils.screen.ElectrolysisChamberScreen;
 import de.nicode3141.nicodesutils.screen.ModMenuTypes;
 import net.minecraft.client.Minecraft;
@@ -56,8 +57,11 @@ public class NicodesUtils
 
     private void commonSetup(final FMLCommonSetupEvent event)
     {
-        // Some common setup code
-        LOGGER.info("HELLO FROM COMMON SETUP");
+        event.enqueueWork(() -> {
+
+        });
+
+        ModMessages.register();
     }
 
 

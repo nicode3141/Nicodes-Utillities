@@ -2,7 +2,10 @@ package de.nicode3141.nicodesutils.block.entity;
 
 import de.nicode3141.nicodesutils.block.custom.ElectrolysisChamberBlock;
 import de.nicode3141.nicodesutils.item.ModItems;
+import de.nicode3141.nicodesutils.networking.ModMessages;
+import de.nicode3141.nicodesutils.networking.packet.EnergySyncS2CPacket;
 import de.nicode3141.nicodesutils.screen.ElectrolysisChamberMenu;
+import de.nicode3141.nicodesutils.util.ModEnergyStorage;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -23,8 +26,10 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.energy.EnergyStorage;
+import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
@@ -50,6 +55,15 @@ public class ElectrolysisChamberBlockEntity extends BlockEntity implements MenuP
         }
     };
 
+    private final ModEnergyStorage ENERGY_STORAGE = new ModEnergyStorage(60000,256) {
+        @Override
+        public void onEnergyChanged() {
+            setChanged();
+            ModMessages.sendToClients(new EnergySyncS2CPacket(this.energy,getBlockPos()));
+        }
+    };
+    private static final int ENERGY_REQ = 32;
+
     private LazyOptional<IItemHandler> lazyItemHandler = LazyOptional.empty();
 
     private final Map<Direction, LazyOptional<WrappedHandler>> directionWrappedHandlerMap =
@@ -61,6 +75,8 @@ public class ElectrolysisChamberBlockEntity extends BlockEntity implements MenuP
                             (index, stack) -> itemHandler.isItemValid(1, stack))),
                     Direction.WEST, LazyOptional.of(() -> new WrappedHandler(itemHandler, (index) -> index == 0 || index == 1,
                             (index, stack) -> itemHandler.isItemValid(0, stack) || itemHandler.isItemValid(1, stack))));
+
+    private LazyOptional<IEnergyStorage> lazyEnergyHandler = LazyOptional.empty();
 
     protected final ContainerData data;
     private int progress = 0;
@@ -105,9 +121,21 @@ public class ElectrolysisChamberBlockEntity extends BlockEntity implements MenuP
         return new ElectrolysisChamberMenu(id, inventory,this, this.data);
     }
 
+    public IEnergyStorage getEnergyStorage() {
+        return ENERGY_STORAGE;
+    }
+
+    public void setEnergyLevel(int energy) {
+        this.ENERGY_STORAGE.setEnergy(energy);
+    }
+
     @Override
     public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @NotNull Direction side) {
-        if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+        if(cap == ForgeCapabilities.ENERGY) {
+            return lazyEnergyHandler.cast();
+        }
+
+        if (cap == ForgeCapabilities.ITEM_HANDLER) {
             if (side == null) {
                 return lazyItemHandler.cast();
             }
@@ -135,18 +163,21 @@ public class ElectrolysisChamberBlockEntity extends BlockEntity implements MenuP
     public void onLoad() {
         super.onLoad();
         lazyItemHandler = LazyOptional.of(() -> itemHandler);
+        lazyEnergyHandler = LazyOptional.of(() -> ENERGY_STORAGE);
     }
 
     @Override
     public void invalidateCaps() {
         super.invalidateCaps();
         lazyItemHandler.invalidate();
+        lazyEnergyHandler.invalidate();
     }
 
     @Override
     protected void saveAdditional(CompoundTag nbt) {
         nbt.put("inventory", itemHandler.serializeNBT());
         nbt.putInt("electrolysis_chamber.progress", this.progress);
+        nbt.putInt("electrolysis_chamber.energy", ENERGY_STORAGE.getEnergyStored());
 
         super.saveAdditional(nbt);
     }
@@ -155,8 +186,8 @@ public class ElectrolysisChamberBlockEntity extends BlockEntity implements MenuP
     public void load(CompoundTag nbt) {
         super.load(nbt);
         itemHandler.deserializeNBT(nbt.getCompound("inventory"));
-
         progress = nbt.getInt("electrolysis_chamber.progress");
+        ENERGY_STORAGE.setEnergy(nbt.getInt("electrolysis_chamber.energy"));
     }
 
     public void drops(){
@@ -173,8 +204,9 @@ public class ElectrolysisChamberBlockEntity extends BlockEntity implements MenuP
             return;
         }
 
-        if(hasRecipe(pEntity)){
+        if(hasRecipe(pEntity) && hasEnoughEnergy(pEntity)){
             pEntity.progress++;
+            extractEnergy(pEntity);
             setChanged(level,pos,state);
 
             if(pEntity.progress >= pEntity.maxProgress) {
@@ -184,6 +216,14 @@ public class ElectrolysisChamberBlockEntity extends BlockEntity implements MenuP
             pEntity.resetProgress();
             setChanged(level,pos,state);
         }
+    }
+
+    private static void extractEnergy(ElectrolysisChamberBlockEntity pEntity) {
+        pEntity.ENERGY_STORAGE.extractEnergy(ENERGY_REQ, false);
+    }
+
+    private static boolean hasEnoughEnergy(ElectrolysisChamberBlockEntity pEntity) {
+        return pEntity.ENERGY_STORAGE.getEnergyStored() >=  ENERGY_REQ * pEntity.maxProgress;
     }
 
     private void resetProgress() {
