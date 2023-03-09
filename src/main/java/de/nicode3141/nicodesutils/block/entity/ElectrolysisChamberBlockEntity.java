@@ -4,6 +4,7 @@ import de.nicode3141.nicodesutils.block.custom.ElectrolysisChamberBlock;
 import de.nicode3141.nicodesutils.item.ModItems;
 import de.nicode3141.nicodesutils.screen.ElectrolysisChamberMenu;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.Container;
@@ -29,15 +30,37 @@ import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Map;
+
 public class ElectrolysisChamberBlockEntity extends BlockEntity implements MenuProvider {
     private final ItemStackHandler itemHandler = new ItemStackHandler(3) {
         @Override
         protected void onContentsChanged(int slot) {
             setChanged();
         }
+
+        @Override
+        public boolean isItemValid(int slot, @NotNull ItemStack stack) {
+            return switch (slot) {
+                case 0 -> stack.getItem() == Items.WATER_BUCKET;
+                case 1 -> false;
+                case 2 -> false;
+                default -> super.isItemValid(slot, stack);
+            };
+        }
     };
 
-    private LazyOptional<IItemHandler> lazyItemHanler = LazyOptional.empty();
+    private LazyOptional<IItemHandler> lazyItemHandler = LazyOptional.empty();
+
+    private final Map<Direction, LazyOptional<WrappedHandler>> directionWrappedHandlerMap =
+            Map.of(Direction.DOWN, LazyOptional.of(() -> new WrappedHandler(itemHandler, (i) -> i == 2, (i, s) -> false)),
+                    Direction.NORTH, LazyOptional.of(() -> new WrappedHandler(itemHandler, (index) -> index == 1,
+                            (index, stack) -> itemHandler.isItemValid(1, stack))),
+                    Direction.SOUTH, LazyOptional.of(() -> new WrappedHandler(itemHandler, (i) -> i == 2, (i, s) -> false)),
+                    Direction.EAST, LazyOptional.of(() -> new WrappedHandler(itemHandler, (i) -> i == 1,
+                            (index, stack) -> itemHandler.isItemValid(1, stack))),
+                    Direction.WEST, LazyOptional.of(() -> new WrappedHandler(itemHandler, (index) -> index == 0 || index == 1,
+                            (index, stack) -> itemHandler.isItemValid(0, stack) || itemHandler.isItemValid(1, stack))));
 
     protected final ContainerData data;
     private int progress = 0;
@@ -83,24 +106,41 @@ public class ElectrolysisChamberBlockEntity extends BlockEntity implements MenuP
     }
 
     @Override
-    public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap) {
-        if(cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY){
-            return lazyItemHanler.cast();
+    public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @NotNull Direction side) {
+        if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+            if (side == null) {
+                return lazyItemHandler.cast();
+            }
+
+            if (directionWrappedHandlerMap.containsKey(side)) {
+                Direction localDir = this.getBlockState().getValue(ElectrolysisChamberBlock.FACING);
+
+                if (side == Direction.UP || side == Direction.DOWN) {
+                    return directionWrappedHandlerMap.get(side).cast();
+                }
+
+                return switch (localDir) {
+                    default -> directionWrappedHandlerMap.get(side.getOpposite()).cast();
+                    case EAST -> directionWrappedHandlerMap.get(side.getClockWise()).cast();
+                    case SOUTH -> directionWrappedHandlerMap.get(side).cast();
+                    case WEST -> directionWrappedHandlerMap.get(side.getCounterClockWise()).cast();
+                };
+            }
         }
 
-        return super.getCapability(cap);
+        return super.getCapability(cap, side);
     }
 
     @Override
     public void onLoad() {
         super.onLoad();
-        lazyItemHanler = LazyOptional.of(() -> itemHandler);
+        lazyItemHandler = LazyOptional.of(() -> itemHandler);
     }
 
     @Override
     public void invalidateCaps() {
         super.invalidateCaps();
-        lazyItemHanler.invalidate();
+        lazyItemHandler.invalidate();
     }
 
     @Override
@@ -152,7 +192,8 @@ public class ElectrolysisChamberBlockEntity extends BlockEntity implements MenuP
 
     private static void craftItem(ElectrolysisChamberBlockEntity pEntity) {
         if(hasRecipe(pEntity)){
-            pEntity.itemHandler.extractItem(1,1,false);
+            pEntity.itemHandler.extractItem(0,1,false);
+            pEntity.itemHandler.setStackInSlot(0, new ItemStack(Items.BUCKET, pEntity.itemHandler.getStackInSlot(0).getCount() + 1));
             pEntity.itemHandler.setStackInSlot(2,new ItemStack(ModItems.HYDROGEN_BUCKET.get(),
                     pEntity.itemHandler.getStackInSlot(2).getCount() + 1));
 
@@ -166,7 +207,7 @@ public class ElectrolysisChamberBlockEntity extends BlockEntity implements MenuP
             inventory.setItem(i, entity.itemHandler.getStackInSlot(i));
         }
 
-        boolean hasWaterInFirstSlot = entity.itemHandler.getStackInSlot(1).getItem() == Items.WATER_BUCKET;
+        boolean hasWaterInFirstSlot = entity.itemHandler.getStackInSlot(0).getItem() == Items.WATER_BUCKET;
 
         return hasWaterInFirstSlot && canInsertAmountIntoOutputSlot(inventory) &&
                 canInsertItemIntoOutputSlot(inventory, new ItemStack(ModItems.HYDROGEN_BUCKET.get(), 1));
