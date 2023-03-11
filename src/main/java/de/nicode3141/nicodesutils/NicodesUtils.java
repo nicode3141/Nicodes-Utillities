@@ -8,6 +8,7 @@ import de.nicode3141.nicodesutils.config.NicodesUtilsCommonConfigs;
 import de.nicode3141.nicodesutils.item.ModCreativeModeTab;
 import de.nicode3141.nicodesutils.item.ModItems;
 import de.nicode3141.nicodesutils.networking.ModMessages;
+import de.nicode3141.nicodesutils.recipe.ModRecipes;
 import de.nicode3141.nicodesutils.screen.ElectrolysisChamberScreen;
 import de.nicode3141.nicodesutils.screen.ModMenuTypes;
 import net.minecraft.client.Minecraft;
@@ -44,6 +45,7 @@ public class NicodesUtils
 
         ModMenuTypes.register(modEventBus);
 
+        ModRecipes.register(modEventBus);
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, NicodesUtilsClientConfigs.SPEC,"nicodesutils-client.toml");
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, NicodesUtilsCommonConfigs.SPEC,"nicodesutils-common.toml");

@@ -4,13 +4,14 @@ import de.nicode3141.nicodesutils.block.custom.ElectrolysisChamberBlock;
 import de.nicode3141.nicodesutils.item.ModItems;
 import de.nicode3141.nicodesutils.networking.ModMessages;
 import de.nicode3141.nicodesutils.networking.packet.EnergySyncS2CPacket;
+import de.nicode3141.nicodesutils.networking.packet.FluidSyncS2CPacket;
+import de.nicode3141.nicodesutils.recipe.ElectrolysisRecipe;
 import de.nicode3141.nicodesutils.screen.ElectrolysisChamberMenu;
 import de.nicode3141.nicodesutils.util.ModEnergyStorage;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.Container;
 import net.minecraft.world.Containers;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
@@ -18,20 +19,18 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.EnergyStorage;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.IFluidTank;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
@@ -39,6 +38,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
+import java.util.Optional;
 
 public class ElectrolysisChamberBlockEntity extends BlockEntity implements MenuProvider {
     private final ItemStackHandler itemHandler = new ItemStackHandler(3) {
@@ -50,8 +50,8 @@ public class ElectrolysisChamberBlockEntity extends BlockEntity implements MenuP
         @Override
         public boolean isItemValid(int slot, @NotNull ItemStack stack) {
             return switch (slot) {
-                case 0 -> stack.getItem() == Items.WATER_BUCKET;
-                case 1 -> false;
+                case 0 -> stack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).isPresent();
+                case 1 -> true;
                 case 2 -> false;
                 default -> super.isItemValid(slot, stack);
             };
@@ -71,13 +71,24 @@ public class ElectrolysisChamberBlockEntity extends BlockEntity implements MenuP
         @Override
         protected void onContentsChanged() {
             super.onContentsChanged();
+            if(!level.isClientSide()) {
+                ModMessages.sendToClients(new FluidSyncS2CPacket(this.fluid, worldPosition));
+            }
         }
 
         @Override
         public boolean isFluidValid(FluidStack stack) {
-            return super.isFluidValid(stack);
+            return stack.getFluid() == Fluids.WATER;
         }
     };
+
+    public void setFluid(FluidStack stack){
+        this.FLUID_TANK.setFluid(stack);
+    }
+
+    public FluidStack getFluidStack() {
+        return this.FLUID_TANK.getFluid();
+    }
 
     private LazyOptional<IItemHandler> lazyItemHandler = LazyOptional.empty();
 
@@ -92,6 +103,7 @@ public class ElectrolysisChamberBlockEntity extends BlockEntity implements MenuP
                             (index, stack) -> itemHandler.isItemValid(0, stack) || itemHandler.isItemValid(1, stack))));
 
     private LazyOptional<IEnergyStorage> lazyEnergyHandler = LazyOptional.empty();
+    private LazyOptional<IFluidHandler> lazyFluidHandler = LazyOptional.empty();
 
     protected final ContainerData data;
     private int progress = 0;
@@ -133,7 +145,10 @@ public class ElectrolysisChamberBlockEntity extends BlockEntity implements MenuP
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int id, Inventory inventory, Player player) {
+        ModMessages.sendToClients(new EnergySyncS2CPacket(this.ENERGY_STORAGE.getEnergyStored(),getBlockPos()));
+        ModMessages.sendToClients(new FluidSyncS2CPacket(this.getFluidStack(), worldPosition));
         return new ElectrolysisChamberMenu(id, inventory,this, this.data);
+
     }
 
     public IEnergyStorage getEnergyStorage() {
@@ -171,6 +186,10 @@ public class ElectrolysisChamberBlockEntity extends BlockEntity implements MenuP
             }
         }
 
+        if(cap == ForgeCapabilities.FLUID_HANDLER) {
+            lazyFluidHandler.cast();
+        }
+
         return super.getCapability(cap, side);
     }
 
@@ -179,6 +198,7 @@ public class ElectrolysisChamberBlockEntity extends BlockEntity implements MenuP
         super.onLoad();
         lazyItemHandler = LazyOptional.of(() -> itemHandler);
         lazyEnergyHandler = LazyOptional.of(() -> ENERGY_STORAGE);
+        lazyFluidHandler = LazyOptional.of(() -> FLUID_TANK);
     }
 
     @Override
@@ -186,6 +206,7 @@ public class ElectrolysisChamberBlockEntity extends BlockEntity implements MenuP
         super.invalidateCaps();
         lazyItemHandler.invalidate();
         lazyEnergyHandler.invalidate();
+        lazyFluidHandler.invalidate();
     }
 
     @Override
@@ -193,6 +214,7 @@ public class ElectrolysisChamberBlockEntity extends BlockEntity implements MenuP
         nbt.put("inventory", itemHandler.serializeNBT());
         nbt.putInt("electrolysis_chamber.progress", this.progress);
         nbt.putInt("electrolysis_chamber.energy", ENERGY_STORAGE.getEnergyStored());
+        nbt =  FLUID_TANK.writeToNBT(nbt);
 
         super.saveAdditional(nbt);
     }
@@ -203,6 +225,7 @@ public class ElectrolysisChamberBlockEntity extends BlockEntity implements MenuP
         itemHandler.deserializeNBT(nbt.getCompound("inventory"));
         progress = nbt.getInt("electrolysis_chamber.progress");
         ENERGY_STORAGE.setEnergy(nbt.getInt("electrolysis_chamber.energy"));
+        FLUID_TANK.readFromNBT(nbt);
     }
 
     public void drops(){
@@ -231,7 +254,35 @@ public class ElectrolysisChamberBlockEntity extends BlockEntity implements MenuP
             pEntity.resetProgress();
             setChanged(level,pos,state);
         }
+
+        if(hasFluidItemInSourceSlot(pEntity)){
+            transferItemFluidToFluidTank(pEntity);
+        }
     }
+
+    private static void transferItemFluidToFluidTank(ElectrolysisChamberBlockEntity pEntity) {
+        pEntity.itemHandler.getStackInSlot(0).getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).ifPresent(handler ->{
+            int drainAmount = Math.min(pEntity.FLUID_TANK.getSpace(), 1000);
+
+            FluidStack stack = handler.drain(drainAmount, IFluidHandler.FluidAction.SIMULATE);
+            if(pEntity.FLUID_TANK.isFluidValid(stack)) {
+                stack =  handler.drain(drainAmount, IFluidHandler.FluidAction.EXECUTE);
+                fillTankWithFluid(pEntity,stack,handler.getContainer());
+            }
+        });
+    }
+
+    private static void fillTankWithFluid(ElectrolysisChamberBlockEntity pEntity, FluidStack stack, ItemStack container) {
+        pEntity.FLUID_TANK.fill(stack, IFluidHandler.FluidAction.EXECUTE);
+
+        pEntity.itemHandler.extractItem(0,1, false);
+        pEntity.itemHandler.insertItem(0,container,false);
+    }
+
+    private static boolean hasFluidItemInSourceSlot(ElectrolysisChamberBlockEntity pEntity) {
+        return pEntity.itemHandler.getStackInSlot(0).getCount() > 0;
+    }
+
 
     private static void extractEnergy(ElectrolysisChamberBlockEntity pEntity) {
         pEntity.ENERGY_STORAGE.extractEnergy(ENERGY_REQ, false);
@@ -246,10 +297,16 @@ public class ElectrolysisChamberBlockEntity extends BlockEntity implements MenuP
     }
 
     private static void craftItem(ElectrolysisChamberBlockEntity pEntity) {
+        Level level = pEntity.level;
+        SimpleContainer inventory = new SimpleContainer(pEntity.itemHandler.getSlots());
+
+        Optional<ElectrolysisRecipe> recipe = level.getRecipeManager()
+                .getRecipeFor(ElectrolysisRecipe.Type.INSTANCE, inventory, level);
+
         if(hasRecipe(pEntity)){
+            pEntity.FLUID_TANK.drain(recipe.get().getFluid().getAmount(), IFluidHandler.FluidAction.EXECUTE);
             pEntity.itemHandler.extractItem(0,1,false);
-            pEntity.itemHandler.setStackInSlot(0, new ItemStack(Items.BUCKET, pEntity.itemHandler.getStackInSlot(0).getCount() + 1));
-            pEntity.itemHandler.setStackInSlot(2,new ItemStack(ModItems.HYDROGEN_BUCKET.get(),
+            pEntity.itemHandler.setStackInSlot(2, new ItemStack(recipe.get().getResultItem().getItem(),
                     pEntity.itemHandler.getStackInSlot(2).getCount() + 1));
 
             pEntity.resetProgress();
@@ -258,6 +315,7 @@ public class ElectrolysisChamberBlockEntity extends BlockEntity implements MenuP
 
     private static boolean hasRecipe(ElectrolysisChamberBlockEntity entity) {
         SimpleContainer inventory = new SimpleContainer(entity.itemHandler.getSlots());
+        /*
         for (int i = 0; i < entity.itemHandler.getSlots(); i++) {
             inventory.setItem(i, entity.itemHandler.getStackInSlot(i));
         }
@@ -265,15 +323,26 @@ public class ElectrolysisChamberBlockEntity extends BlockEntity implements MenuP
         boolean hasWaterInFirstSlot = entity.itemHandler.getStackInSlot(0).getItem() == Items.WATER_BUCKET;
 
         return hasWaterInFirstSlot && canInsertAmountIntoOutputSlot(inventory) &&
-                canInsertItemIntoOutputSlot(inventory, new ItemStack(ModItems.HYDROGEN_BUCKET.get(), 1));
+                canInsertItemIntoOutputSlot(inventory, new ItemStack(ModItems.HYDROGEN_BUCKET.get(), 1));*/
 
+        Level level = entity.level;
+
+        Optional<ElectrolysisRecipe> recipe = level.getRecipeManager()
+                .getRecipeFor(ElectrolysisRecipe.Type.INSTANCE, inventory, level);
+
+        //return entity.FLUID_TANK.getFluidAmount() >= 500;
+        return recipe.isPresent() && canInsertAmountIntoOutputSlot(inventory, recipe.get().getResultItem()) && hasCorrectFluidInTank(entity, recipe);
+    }
+
+    private static boolean hasCorrectFluidInTank(ElectrolysisChamberBlockEntity entity, Optional<ElectrolysisRecipe> recipe) {
+        return recipe.get().getFluid().equals(entity.FLUID_TANK.getFluid());
     }
 
     private static boolean canInsertItemIntoOutputSlot(SimpleContainer inventory, ItemStack stack) {
         return inventory.getItem(2).getItem() == stack.getItem() || inventory.getItem(2).isEmpty();
     }
 
-    private static boolean canInsertAmountIntoOutputSlot(SimpleContainer inventory) {
+    private static boolean canInsertAmountIntoOutputSlot(SimpleContainer inventory, ItemStack resultItem) {
         return inventory.getItem(2).getMaxStackSize() > inventory.getItem(2).getCount();
     }
 }

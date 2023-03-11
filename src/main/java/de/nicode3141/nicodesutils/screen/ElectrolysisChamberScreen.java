@@ -4,12 +4,14 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import de.nicode3141.nicodesutils.NicodesUtils;
 import de.nicode3141.nicodesutils.screen.renderer.EnergyInfoArea;
+import de.nicode3141.nicodesutils.screen.renderer.FluidTankRenderer;
 import de.nicode3141.nicodesutils.util.MouseUtil;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.item.TooltipFlag;
 
 import java.util.Optional;
 
@@ -18,6 +20,7 @@ public class ElectrolysisChamberScreen extends AbstractContainerScreen<Electroly
             new ResourceLocation(NicodesUtils.MOD_ID,"textures/gui/machines/electrolysis_chamber_gui.png");
 
     private EnergyInfoArea energyInfoArea;
+    private FluidTankRenderer renderer;
 
     public ElectrolysisChamberScreen(ElectrolysisChamberMenu electrolysisChamberMenu, Inventory inventory, Component component) {
         super(electrolysisChamberMenu, inventory, component);
@@ -27,6 +30,14 @@ public class ElectrolysisChamberScreen extends AbstractContainerScreen<Electroly
     protected void init() {
         super.init();
         assignEnergyInfoArea();
+        assignFluidInfoArea();
+    }
+
+    private void assignFluidInfoArea() {
+        int x = (width - imageWidth) / 2;
+        int y = (height - imageHeight) / 2;
+
+        renderer = new FluidTankRenderer(64000, true,16,61);
     }
 
     private void assignEnergyInfoArea() {
@@ -42,6 +53,14 @@ public class ElectrolysisChamberScreen extends AbstractContainerScreen<Electroly
         int y = (height - imageHeight) / 2;
 
         renderEnergyAreaTooltips(pPoseStack,pMouseX,pMouseY, x, y);
+        renderFluidAreaTooltips(pPoseStack, pMouseX, pMouseY, x, y);
+    }
+
+    private void renderFluidAreaTooltips(PoseStack pPoseStack, int pMouseX, int pMouseY, int x, int y) {
+        if(isMouseAboveArea(pMouseX, pMouseY, x, y, 55, 15)) {
+            renderTooltip(pPoseStack, renderer.getTooltip(menu.getFluidStack(), TooltipFlag.Default.NORMAL),
+                    Optional.empty(), pMouseX - x, pMouseY - y);
+        }
     }
 
     private void renderEnergyAreaTooltips(PoseStack pPoseStack, int pMouseX, int pMouseY, int x, int y) {
@@ -63,6 +82,7 @@ public class ElectrolysisChamberScreen extends AbstractContainerScreen<Electroly
 
         renderProgressArrow(pPoseStack, x, y);
         energyInfoArea.draw(pPoseStack);
+        renderer.render(pPoseStack, x + 55, y + 15, menu.getFluidStack());
     }
 
     private void renderProgressArrow(PoseStack pPoseStack, int x, int y) {
@@ -78,6 +98,9 @@ public class ElectrolysisChamberScreen extends AbstractContainerScreen<Electroly
         renderTooltip(pPoseStack, mouseX, mouseY);
     }
 
+    private boolean isMouseAboveArea(int pMouseX, int pMouseY, int x, int y, int offsetX, int offsetY) {
+        return MouseUtil.isMouseOver(pMouseX, pMouseY, x + offsetX, y + offsetY, renderer.getWidth(), renderer.getHeight());
+    }
     private boolean isMouseAboveArea(int pMouseX, int pMouseY, int x, int y, int offsetX, int offsetY, int width, int height) {
         return MouseUtil.isMouseOver(pMouseX, pMouseY, x + offsetX, y + offsetY, width, height);
     }

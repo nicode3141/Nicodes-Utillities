@@ -1,5 +1,10 @@
 {
   "item.nicodesutils.hydrogen_bucket" : "Bucket of Hydrogen",
+
   "block.nicodesutils.electrolysis_chamber" : "Electrolysis Chamber",
-  "itemGroup.nicodesutilstab" : "Nicodes Utillities"
+
+  "itemGroup.nicodesutilstab" : "Nicodes Utillities",
+
+  "nicodesutils.tooltip.liquid.amount.with.capacity": "%s / %s mB",
+  "nicodesutils.tooltip.liquid.amount" : "%s mB"
 }

@@ -11,12 +11,14 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.items.SlotItemHandler;
 
 public class ElectrolysisChamberMenu extends AbstractContainerMenu {
     public final ElectrolysisChamberBlockEntity blockEntity;
     private final Level level;
     private final ContainerData data;
+    private FluidStack fluidStack;
 
     public ElectrolysisChamberMenu(int id, Inventory inv, FriendlyByteBuf extraData) {
         this(id,inv,inv.player.level.getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(2)); //SimpleContainerData must match getCount() in BlockEntity Class!!!
@@ -28,6 +30,7 @@ public class ElectrolysisChamberMenu extends AbstractContainerMenu {
         blockEntity = (ElectrolysisChamberBlockEntity) entity;
         this.level = inv.player.level;
         this.data = data;
+        this.fluidStack = blockEntity.getFluidStack();
 
         addPlayerInventory(inv);
         addPlayerHotbar(inv);
@@ -42,6 +45,14 @@ public class ElectrolysisChamberMenu extends AbstractContainerMenu {
 
     public boolean isCrafting(){
         return data.get(0) > 0;
+    }
+
+    public void setFluid(FluidStack fluidStack) {
+        this.fluidStack = fluidStack;
+    }
+
+    public FluidStack getFluidStack() {
+        return fluidStack;
     }
 
     public ElectrolysisChamberBlockEntity getBlockEntity() {
