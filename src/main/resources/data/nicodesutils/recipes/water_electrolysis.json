@@ -9,7 +9,7 @@
     "FluidName" : "minecraft:water",
     "Amount" : 500
   },
-  "result": {
+  "output": {
     "item": "nicodesutils:hydrogen_bucket"
   }
 }

@@ -331,7 +331,12 @@ public class ElectrolysisChamberBlockEntity extends BlockEntity implements MenuP
                 .getRecipeFor(ElectrolysisRecipe.Type.INSTANCE, inventory, level);
 
         //return entity.FLUID_TANK.getFluidAmount() >= 500;
-        return recipe.isPresent() && canInsertAmountIntoOutputSlot(inventory, recipe.get().getResultItem()) && hasCorrectFluidInTank(entity, recipe);
+        return recipe.isPresent() && canInsertAmountIntoOutputSlot(inventory, recipe.get().getResultItem())
+                && hasCorrectFluidInTank(entity, recipe) && hasCorrectFluidAmountInTank(entity, recipe);
+    }
+
+    private static boolean hasCorrectFluidAmountInTank(ElectrolysisChamberBlockEntity entity, Optional<ElectrolysisRecipe> recipe) {
+        return entity.FLUID_TANK.getFluidAmount() >= recipe.get().getFluid().getAmount();
     }
 
     private static boolean hasCorrectFluidInTank(ElectrolysisChamberBlockEntity entity, Optional<ElectrolysisRecipe> recipe) {

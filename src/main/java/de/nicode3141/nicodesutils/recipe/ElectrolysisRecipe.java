@@ -89,7 +89,7 @@ public class ElectrolysisRecipe implements Recipe<SimpleContainer> {
     public static class Serializer implements RecipeSerializer<ElectrolysisRecipe> {
         public static final Serializer INSTANCE = new Serializer();
         public static final ResourceLocation ID =
-                new ResourceLocation(NicodesUtils.MOD_ID, "electrolysis");
+                    new ResourceLocation(NicodesUtils.MOD_ID, "electrolysis");
 
         @Override
         public ElectrolysisRecipe fromJson(ResourceLocation pRecipeId, JsonObject pSerializedRecipe) {

@@ -2,12 +2,15 @@ package de.nicode3141.nicodesutils.block;
 
 import de.nicode3141.nicodesutils.NicodesUtils;
 import de.nicode3141.nicodesutils.block.custom.ElectrolysisChamberBlock;
+import de.nicode3141.nicodesutils.fluid.ModFluids;
 import de.nicode3141.nicodesutils.item.ModCreativeModeTab;
 import de.nicode3141.nicodesutils.item.ModItems;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -27,6 +30,9 @@ public class ModBlocks {
                     .strength(6f).requiresCorrectToolForDrops()), ModCreativeModeTab.NICODESUTILS_TAB);
 
 
+
+    public static final RegistryObject<LiquidBlock> SOAP_WATER_BLOCK = BLOCKS.register("soap_water_block",
+            () -> new LiquidBlock(ModFluids.SOURCE_SOAP_WATER, BlockBehaviour.Properties.copy(Blocks.WATER)));
 
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block, CreativeModeTab tab){
