@@ -18,7 +18,7 @@ public class ModItems {
     //------------------------------------------------------------------------------------------------------------------
 
     public static final RegistryObject<Item> HYDROGEN_BUCKET = ITEMS.register("hydrogen_bucket",
-            () -> new BucketItem(ModFluids.SOURCE_SOAP_WATER, new Item.Properties()
+            () -> new BucketItem(ModFluids.SOURCE_HYDROGEN, new Item.Properties()
                     .tab(ModCreativeModeTab.NICODESUTILS_TAB).craftRemainder(Items.BUCKET)
                     .stacksTo(1)));
 

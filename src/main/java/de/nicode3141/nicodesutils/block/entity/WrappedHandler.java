@@ -1,7 +1,10 @@
 package de.nicode3141.nicodesutils.block.entity;
 
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import java.util.function.BiPredicate;
@@ -12,7 +15,7 @@ import java.util.function.Predicate;
  * under https://github.com/ModdingX/LibX/blob/1.19/LICENSE
  *
  */
-public class WrappedHandler implements IItemHandlerModifiable {
+public class WrappedHandler implements IItemHandlerModifiable, IFluidHandler {
     private final IItemHandlerModifiable handler;
     private final Predicate<Integer> extract;
     private final BiPredicate<Integer, ItemStack> insert;
@@ -60,5 +63,40 @@ public class WrappedHandler implements IItemHandlerModifiable {
     @Override
     public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
         return this.insert.test(slot, stack) && this.handler.isItemValid(slot, stack);
+    }
+
+    @Override
+    public int getTanks() {
+        return 0;
+    }
+
+    @Override
+    public @NotNull FluidStack getFluidInTank(int tank) {
+        return null;
+    }
+
+    @Override
+    public int getTankCapacity(int tank) {
+        return 0;
+    }
+
+    @Override
+    public boolean isFluidValid(int tank, @NotNull FluidStack stack) {
+        return false;
+    }
+
+    @Override
+    public int fill(FluidStack resource, FluidAction action) {
+        return 0;
+    }
+
+    @Override
+    public @NotNull FluidStack drain(FluidStack resource, FluidAction action) {
+        return null;
+    }
+
+    @Override
+    public @NotNull FluidStack drain(int maxDrain, FluidAction action) {
+        return null;
     }
 }

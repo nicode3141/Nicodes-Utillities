@@ -102,6 +102,16 @@ public class ElectrolysisChamberBlockEntity extends BlockEntity implements MenuP
                     Direction.WEST, LazyOptional.of(() -> new WrappedHandler(itemHandler, (index) -> index == 0 || index == 1,
                             (index, stack) -> itemHandler.isItemValid(0, stack) || itemHandler.isItemValid(1, stack))));
 
+    private final Map<Direction, LazyOptional<WrappedHandler>> directionWrappedFluidHandlerMap =
+            Map.of(Direction.DOWN, LazyOptional.of(() -> new WrappedHandler(itemHandler, (i) -> i == 2, (i, s) -> false)),
+                    Direction.NORTH, LazyOptional.of(() -> new WrappedHandler(itemHandler, (index) -> index == 1,
+                            (index, stack) -> itemHandler.isItemValid(1, stack))),
+                    Direction.SOUTH, LazyOptional.of(() -> new WrappedHandler(itemHandler, (i) -> i == 2, (i, s) -> false)),
+                    Direction.EAST, LazyOptional.of(() -> new WrappedHandler(itemHandler, (i) -> i == 1,
+                            (index, stack) -> itemHandler.isItemValid(1, stack))),
+                    Direction.WEST, LazyOptional.of(() -> new WrappedHandler(itemHandler, (index) -> index == 0 || index == 1,
+                            (index, stack) -> itemHandler.isItemValid(0, stack) || itemHandler.isItemValid(1, stack))));
+
     private LazyOptional<IEnergyStorage> lazyEnergyHandler = LazyOptional.empty();
     private LazyOptional<IFluidHandler> lazyFluidHandler = LazyOptional.empty();
 

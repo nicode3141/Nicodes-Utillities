@@ -1,6 +1,7 @@
 package de.nicode3141.nicodesutils.block;
 
 import de.nicode3141.nicodesutils.NicodesUtils;
+import de.nicode3141.nicodesutils.block.custom.CustomTNTBlock;
 import de.nicode3141.nicodesutils.block.custom.ElectrolysisChamberBlock;
 import de.nicode3141.nicodesutils.fluid.ModFluids;
 import de.nicode3141.nicodesutils.item.ModCreativeModeTab;
@@ -25,14 +26,14 @@ public class ModBlocks {
             DeferredRegister.create(ForgeRegistries.BLOCKS, NicodesUtils.MOD_ID);
 
 
+
     public static final RegistryObject<Block> ELECTROLYSIS_CHAMBER = registerBlock("electrolysis_chamber",
             ()-> new ElectrolysisChamberBlock(BlockBehaviour.Properties.of(Material.STONE)
                     .strength(6f).requiresCorrectToolForDrops()), ModCreativeModeTab.NICODESUTILS_TAB);
 
 
-
-    public static final RegistryObject<LiquidBlock> SOAP_WATER_BLOCK = BLOCKS.register("soap_water_block",
-            () -> new LiquidBlock(ModFluids.SOURCE_SOAP_WATER, BlockBehaviour.Properties.copy(Blocks.WATER)));
+    public static final RegistryObject<LiquidBlock> HYDROGEN_BLOCK = BLOCKS.register("hydrogen_block",
+            () -> new LiquidBlock(ModFluids.SOURCE_HYDROGEN, BlockBehaviour.Properties.copy(Blocks.WATER)));
 
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block, CreativeModeTab tab){
@@ -45,6 +46,13 @@ public class ModBlocks {
                                                                             CreativeModeTab tab){
         return ModItems.ITEMS.register(name, ()-> new BlockItem(block.get(), new Item.Properties().tab(ModCreativeModeTab.NICODESUTILS_TAB)));
     }
+
+    public static final RegistryObject<Block> CUSTOM_TNT = registerBlock("custom_tnt",
+            ()-> new CustomTNTBlock(BlockBehaviour.Properties.of(Material.STONE)
+                    .strength(6f).requiresCorrectToolForDrops()), ModCreativeModeTab.NICODESUTILS_TAB);
+
+
+
 
     public static void register(IEventBus eventBus){
         BLOCKS.register(eventBus);

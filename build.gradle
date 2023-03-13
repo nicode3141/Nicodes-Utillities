@@ -133,6 +133,9 @@ repositories {
             includeGroup "curse.maven"
         }
     }
+    maven {
+        url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
+    }
 
     // Put repositories for dependencies here
     // ForgeGradle automatically adds the Forge maven and Maven Central for you
@@ -159,6 +162,8 @@ dependencies {
     runtimeOnly fg.deobf("mekanism:Mekanism:${mekanism_version}")// core
     runtimeOnly fg.deobf("mekanism:Mekanism:${mekanism_version}:additions")// Mekanism: Additions
     runtimeOnly fg.deobf("mekanism:Mekanism:${mekanism_version}:generators")// Mekanism: Generators
+
+    implementation fg.deobf('software.bernie.geckolib:geckolib-forge-1.19:3.1.19')
 
     // Real mod deobf dependency examples - these get remapped to your current mappings
     // implementation fg.deobf("com.tterrag.registrate:Registrate:MC${mc_version}-${registrate_version}") // Adds registrate as a dependency

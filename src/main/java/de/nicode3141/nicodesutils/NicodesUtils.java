@@ -5,18 +5,23 @@ import de.nicode3141.nicodesutils.block.ModBlocks;
 import de.nicode3141.nicodesutils.block.entity.ModBlockEntities;
 import de.nicode3141.nicodesutils.config.NicodesUtilsClientConfigs;
 import de.nicode3141.nicodesutils.config.NicodesUtilsCommonConfigs;
+import de.nicode3141.nicodesutils.entity.ModEntityTypes;
+import de.nicode3141.nicodesutils.entity.custom.EntityCustomTNT;
 import de.nicode3141.nicodesutils.fluid.ModFluidTypes;
 import de.nicode3141.nicodesutils.fluid.ModFluids;
 import de.nicode3141.nicodesutils.item.ModCreativeModeTab;
 import de.nicode3141.nicodesutils.item.ModItems;
 import de.nicode3141.nicodesutils.networking.ModMessages;
 import de.nicode3141.nicodesutils.recipe.ModRecipes;
+import de.nicode3141.nicodesutils.render.entity.RenderCustomTNTPrimed;
 import de.nicode3141.nicodesutils.screen.ElectrolysisChamberScreen;
 import de.nicode3141.nicodesutils.screen.ModMenuTypes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.world.entity.item.PrimedTnt;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -50,6 +55,8 @@ public class NicodesUtils
         ModFluids.register(modEventBus);
         ModFluidTypes.register(modEventBus);
 
+        ModEntityTypes.register(modEventBus);
+
         ModMenuTypes.register(modEventBus);
 
         ModRecipes.register(modEventBus);
@@ -82,10 +89,12 @@ public class NicodesUtils
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event)
         {
-            ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_SOAP_WATER.get(), RenderType.translucent());
-            ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_SOAP_WATER.get(), RenderType.translucent());
+            ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_HYDROGEN.get(), RenderType.translucent());
+            ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_HYDROGEN.get(), RenderType.translucent());
 
             MenuScreens.register(ModMenuTypes.ELECTROLYSIS_CHAMBER_MENU.get(), ElectrolysisChamberScreen::new);
+
+            EntityRenderers.register(ModEntityTypes.CUSTOM_TNT.get(), RenderCustomTNTPrimed::new);
         }
     }
 }

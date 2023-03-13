@@ -21,14 +21,14 @@ public class ModFluids {
     public static final DeferredRegister<Fluid> FLUIDS =
             DeferredRegister.create(ForgeRegistries.FLUIDS, NicodesUtils.MOD_ID);
 
-    public static final RegistryObject<FlowingFluid> SOURCE_SOAP_WATER = FLUIDS.register("soap_water_fluid",
-            () -> new ForgeFlowingFluid.Source(ModFluids.SOAP_WATER_FLIUD_PROPERTIES));
-    public static final RegistryObject<FlowingFluid> FLOWING_SOAP_WATER = FLUIDS.register("flowing_soap_water",
-            () -> new ForgeFlowingFluid.Flowing(ModFluids.SOAP_WATER_FLIUD_PROPERTIES));
+    public static final RegistryObject<FlowingFluid> SOURCE_HYDROGEN = FLUIDS.register("hydrogen_fluid",
+            () -> new ForgeFlowingFluid.Source(ModFluids.HYDROGEN_FLUID_PROPERTIES));
+    public static final RegistryObject<FlowingFluid> FLOWING_HYDROGEN = FLUIDS.register("flowing_hydrogen",
+            () -> new ForgeFlowingFluid.Flowing(ModFluids.HYDROGEN_FLUID_PROPERTIES));
 
-    public static final ForgeFlowingFluid.Properties SOAP_WATER_FLIUD_PROPERTIES = new ForgeFlowingFluid.Properties(
-            ModFluidTypes.SOAP_WATER_FLUID_TYPE, SOURCE_SOAP_WATER, FLOWING_SOAP_WATER)
-            .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.SOAP_WATER_BLOCK).bucket(ModItems.HYDROGEN_BUCKET);
+    public static final ForgeFlowingFluid.Properties HYDROGEN_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
+            ModFluidTypes.HYDROGEN_FLUID_TYPE, SOURCE_HYDROGEN, FLOWING_HYDROGEN)
+            .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.HYDROGEN_BLOCK).bucket(ModItems.HYDROGEN_BUCKET);
 
 
     public static void register(IEventBus eventBus) {
