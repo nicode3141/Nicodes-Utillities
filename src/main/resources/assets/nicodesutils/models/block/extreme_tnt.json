@@ -1,0 +1,7 @@
+{
+  "parent": "block/cube_column",
+  "textures": {
+    "side": "nicodesutils:block/extreme_tnt/side",
+    "end": "nicodesutils:block/extreme_tnt/top"
+  }
+}

@@ -3,7 +3,9 @@ package de.nicode3141.nicodesutils;
 import de.nicode3141.nicodesutils.block.ModBlocks;
 import de.nicode3141.nicodesutils.container.ModContainers;
 import de.nicode3141.nicodesutils.entity.ModEntityTypes;
+import de.nicode3141.nicodesutils.entity.custom.ExtremeTNTEntity;
 import de.nicode3141.nicodesutils.entity.custom.ModVillager;
+import de.nicode3141.nicodesutils.entity.render.ExtremeTNTRenderer;
 import de.nicode3141.nicodesutils.entity.render.RGBSheepRenderer;
 import de.nicode3141.nicodesutils.item.ModItems;
 import de.nicode3141.nicodesutils.paintings.ModPaintings;
@@ -102,6 +104,7 @@ public class NicodesUtils
             RenderTypeLookup.setRenderLayer(ModBlocks.NICODE_BLOCK.get(), RenderType.getCutout());
         });
         RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.BRP_SHEEP.get(), RGBSheepRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.EXTREME_TNT.get(), ExtremeTNTRenderer::new);
         ModItemModelProperties.makeBow(ModItems.BRPBOW.get());
     }
 

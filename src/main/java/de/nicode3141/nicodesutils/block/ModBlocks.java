@@ -2,8 +2,10 @@ package de.nicode3141.nicodesutils.block;
 
 import de.nicode3141.nicodesutils.block.custom.BrpTeleporter;
 import de.nicode3141.nicodesutils.NicodesUtils;
+import de.nicode3141.nicodesutils.block.custom.extremeTNT.ExtremeTNTBlock;
 import de.nicode3141.nicodesutils.custom.NicodeBlock;
 import de.nicode3141.nicodesutils.custom.ItemShredderBlock;
+import de.nicode3141.nicodesutils.custom.chamber.ElectrolysisChamberBlock;
 import de.nicode3141.nicodesutils.item.ModItemGroup;
 import de.nicode3141.nicodesutils.item.ModItems;
 import net.minecraft.block.AbstractBlock;
@@ -96,6 +98,9 @@ public class ModBlocks {
                         .harvestLevel(4).harvestTool(ToolType.PICKAXE).setRequiresTool().hardnessAndResistance(4f).notSolid()));
 
 
+
+
+
     //TILE ENTITY BLOCKS
         //creates TileEntity "Item Shredder"
         public static final RegistryObject<Block> ITEM_SHREDDER = registerBlock("item_shredder",
@@ -103,8 +108,8 @@ public class ModBlocks {
                         .harvestLevel(1).harvestTool(ToolType.PICKAXE).setRequiresTool().hardnessAndResistance(1f)));
 
         public static final RegistryObject<Block> ELECTROLYSIS_CHAMBER = registerBlock("electrolysis_chamber",
-                () -> new ItemShredderBlock(AbstractBlock.Properties.create(Material.SAND)
-                        .harvestLevel(1).harvestTool(ToolType.PICKAXE).setRequiresTool().hardnessAndResistance(1f)));
+                () -> new ElectrolysisChamberBlock(AbstractBlock.Properties.create(Material.SAND)
+                        .harvestLevel(1).harvestTool(ToolType.PICKAXE).setRequiresTool().hardnessAndResistance(2f)));
 
     //CUSTOM BLOCKS
         public static final RegistryObject<Block> BRP_TELEPORTER = registerBlock("brp_teleporter",
@@ -112,6 +117,9 @@ public class ModBlocks {
                         .harvestLevel(4).harvestTool(ToolType.PICKAXE).setRequiresTool().hardnessAndResistance(4f).notSolid()));
 
 
+    public static final RegistryObject<Block> EXTREME_TNT = registerBlock("extreme_tnt",
+            () -> new ExtremeTNTBlock(AbstractBlock.Properties.create(Material.SAND)
+                    .harvestLevel(0).hardnessAndResistance(1f).notSolid()));
 
 
 

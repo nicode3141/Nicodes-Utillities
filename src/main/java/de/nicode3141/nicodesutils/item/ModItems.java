@@ -37,7 +37,7 @@ public class ModItems {
     public static final RegistryObject<Item> BRP_SWORD = ITEMS.register("brp_sword",
             () -> new SwordItem(ModItemTier.BRPSWORD, 99,0.0001f ,new Item.Properties().group(ModItemGroup.NICODESUTILS_GROUP).rarity(Rarity.EPIC)));
 
-    //Registers the Item "rickroll music disc"
+    //Registers the Item "rickroll music disc" BUG -> NO FADE OUR WHEN NOT NEAR JUKEBOX
     public static final RegistryObject<Item> RICKROLL_MUSIC_DISC = ITEMS.register("rickroll_music_disc",
             () -> new MusicDiscItem(1,() -> ModSoundEvents.RICKROLL.get(),
                     new Item.Properties().group(ModItemGroup.NICODESUTILS_GROUP).maxStackSize(1)));

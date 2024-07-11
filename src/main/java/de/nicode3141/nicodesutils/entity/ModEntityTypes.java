@@ -1,6 +1,7 @@
 package de.nicode3141.nicodesutils.entity;
 
 import de.nicode3141.nicodesutils.NicodesUtils;
+import de.nicode3141.nicodesutils.entity.custom.ExtremeTNTEntity;
 import de.nicode3141.nicodesutils.entity.custom.RGBSheepEntity;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
@@ -18,6 +19,11 @@ public class ModEntityTypes {
             ENITITY_TYPES.register("brp_sheep", () -> EntityType.Builder.create(RGBSheepEntity::new,
                     EntityClassification.CREATURE).size(0.9F, 1.3F)
                     .build(new ResourceLocation(NicodesUtils.MOD_ID,"brp_sheep").toString()));
+
+    public static final RegistryObject<EntityType<ExtremeTNTEntity>> EXTREME_TNT =
+            ENITITY_TYPES.register("extreme_tnt", () -> EntityType.Builder.create(ExtremeTNTEntity::new,
+                    EntityClassification.MISC).immuneToFire().size(1.0f, 1.0f)
+                    .build(new ResourceLocation(NicodesUtils.MOD_ID, "extreme_tnt").toString()));
 
     public static void register(IEventBus eventBus) {
         ENITITY_TYPES.register(eventBus);
