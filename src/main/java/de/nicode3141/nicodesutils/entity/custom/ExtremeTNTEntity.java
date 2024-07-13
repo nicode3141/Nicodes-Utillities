@@ -1,5 +1,6 @@
 package de.nicode3141.nicodesutils.entity.custom;
 
+import de.nicode3141.nicodesutils.block.ModBlocks;
 import de.nicode3141.nicodesutils.block.custom.extremeTNT.ExplosionHandler;
 import de.nicode3141.nicodesutils.entity.ModEntityTypes;
 import net.minecraft.entity.Entity;
@@ -38,7 +39,7 @@ public class ExtremeTNTEntity extends TNTEntity {
 
     public static ExtremeTNTEntity create(World worldIn, double x, double y, double z, @Nullable LivingEntity igniter) {
         ExtremeTNTEntity entity = ModEntityTypes.EXTREME_TNT.get().create(worldIn);
-        igniter.sendMessage(new StringTextComponent("This should create a entity!"), igniter.getUniqueID());
+
 
         entity.setPosition(x, y, z);
 
@@ -83,10 +84,14 @@ public class ExtremeTNTEntity extends TNTEntity {
         }
     }
 
+    @Nullable
+    public LivingEntity getIgniter() {
+        return this.igniter;
+    }
+
     @Override
     protected void explode() {
-        igniter.sendMessage(new StringTextComponent("Exploded!"), igniter.getUniqueID());
-        ExplosionHandler explosion = new ExplosionHandler(getPosition(), (ServerWorld) world, 70);
+        ExplosionHandler explosion = new ExplosionHandler(getPosition(), (ServerWorld) world, 30);
         explosion.explode();
     }
 
@@ -98,6 +103,6 @@ public class ExtremeTNTEntity extends TNTEntity {
 
     @Override
     public IPacket<?> createSpawnPacket() {
-        return new SSpawnObjectPacket(this);
+        return NetworkHooks.getEntitySpawningPacket(this);
     }
 }
