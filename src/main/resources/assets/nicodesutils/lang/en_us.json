@@ -33,6 +33,8 @@
   "block.nicodesutils.cobalt_block": "Cobalt Block",
   "block.nicodesutils.extreme_tnt": "Extreme TNT",
 
+  "death.attack.damage.explosion": "%1$s got blasted away, HAHA!",
+
 
   "itemGroup.nicodesutilstab": "Nicodes Utillities"
 }

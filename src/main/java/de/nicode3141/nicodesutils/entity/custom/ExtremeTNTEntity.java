@@ -91,7 +91,7 @@ public class ExtremeTNTEntity extends TNTEntity {
 
     @Override
     protected void explode() {
-        ExplosionHandler explosion = new ExplosionHandler(getPosition(), (ServerWorld) world, 30);
+        ExplosionHandler explosion = new ExplosionHandler(getPosition(), (ServerWorld) world, 40);
         explosion.explode();
     }
 

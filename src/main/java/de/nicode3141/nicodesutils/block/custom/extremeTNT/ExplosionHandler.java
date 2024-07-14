@@ -1,11 +1,13 @@
 package de.nicode3141.nicodesutils.block.custom.extremeTNT;
 
+import de.nicode3141.nicodesutils.util.ModSoundEvents;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.dispenser.IPosition;
 import net.minecraft.entity.Entity;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
@@ -20,7 +22,7 @@ public class ExplosionHandler {
     private final BlockPos originPosition;
     private final ServerWorld world;
     private final int radius;
-    public static DamageSource explosionDamage = new DamageSource("explosion").setExplosion().setDamageBypassesArmor();
+    public static DamageSource explosionDamage = new DamageSource("damage.explosion").setExplosion().setDamageBypassesArmor();
 
     public ExplosionHandler(BlockPos originPosition, ServerWorld world, int radius){
         this.originPosition = originPosition;
@@ -30,7 +32,7 @@ public class ExplosionHandler {
 
     public void explode(){
 
-        world.playSound(null, originPosition.getX(), originPosition.getY(),originPosition.getZ(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.BLOCKS, 10.0F, 0.9F);
+        world.playSound(null, originPosition.getX(), originPosition.getY(),originPosition.getZ(), ModSoundEvents.MEDIUM_EXPLOSION.get(), SoundCategory.BLOCKS, 10.0F, 0.9F);
         HashSet<BlockPos> blockToDestroy = new HashSet<>();
 
         //adds Blocks in radius to HashSet
@@ -57,13 +59,20 @@ public class ExplosionHandler {
             }
         }
 
-        /*List<Entity> entities = world.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(originPosition));
+        world.addParticle(ParticleTypes.EXPLOSION_EMITTER, originPosition.getX(), originPosition.getY(),originPosition.getZ(), 10.0D, 0.0D, 0.0D);
+        world.addOptionalParticle(ParticleTypes.EXPLOSION, originPosition.getX(), originPosition.getY(),originPosition.getZ(), 10.0D, 0.0D, 0.0D);
+
+        AxisAlignedBB axis = new AxisAlignedBB(BlockPos.unpackX(
+                originPosition.toLong()) - radius, BlockPos.unpackY(originPosition.toLong()) - radius, BlockPos.unpackZ(originPosition.toLong()) -Math.min(radius, 100),
+                BlockPos.unpackX(originPosition.toLong()) + radius, BlockPos.unpackY(originPosition.toLong()) + radius, BlockPos.unpackZ(originPosition.toLong()) + radius);
+        List<Entity> entities = world.getEntitiesWithinAABB(Entity.class, axis);
         for (Entity entity : entities) {
-            double distance = originPosition.distanceSq((IPosition) entity.getPosition(), true);
-            float damage = (float) ((radius - Math.sqrt(distance)) * 10);
-            entity.attackEntityFrom(DamageSource.causeBedExplosionDamage(), damage);
-            entity.remove();
-        }*/
+            System.out.println(entity.getEntityId());
+            double distance = originPosition.distanceSq( entity.prevPosX, entity.prevPosY, entity.prevPosZ, true);
+            float damage = (float) ((radius - Math.sqrt(distance)) * 1000);
+            entity.attackEntityFrom(explosionDamage, damage);
+            //entity.remove();
+        }
 
     }
 }

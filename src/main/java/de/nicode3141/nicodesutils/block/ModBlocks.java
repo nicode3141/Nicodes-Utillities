@@ -68,8 +68,8 @@ public class ModBlocks {
 
                 //creates the Block "Compressed Bitcoin"
                 public static final RegistryObject<Block> NICODE_BLOCK = registerBlock("nicode_block",
-                        () -> new NicodeBlock(AbstractBlock.Properties.create(Material.ROCK)
-                                .harvestLevel(4).harvestTool(ToolType.PICKAXE).setRequiresTool().hardnessAndResistance(4f).notSolid()));
+                        () -> new NicodeBlock(AbstractBlock.Properties.create(Material.SAND)
+                                .notSolid()));
 
 
         //RESOURCES
@@ -119,7 +119,7 @@ public class ModBlocks {
 
     public static final RegistryObject<Block> EXTREME_TNT = registerBlock("extreme_tnt",
             () -> new ExtremeTNTBlock(AbstractBlock.Properties.create(Material.SAND)
-                    .harvestLevel(0).hardnessAndResistance(1f).notSolid()));
+                    .notSolid()));
 
 
 

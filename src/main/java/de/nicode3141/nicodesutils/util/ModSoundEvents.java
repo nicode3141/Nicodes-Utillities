@@ -19,6 +19,12 @@ public class ModSoundEvents {
     public static final RegistryObject<SoundEvent> WORKER_NOICH_VILLAGER =
             registerSoundEvent("worker_noich_villager");
 
+    public static final RegistryObject<SoundEvent> MEDIUM_EXPLOSION =
+            registerSoundEvent("medium-explosion");
+
+    public static final RegistryObject<SoundEvent> EXTREME_EXPLOSION =
+            registerSoundEvent("extreme-explosion");
+
     private static RegistryObject<SoundEvent> registerSoundEvent(String name){
         return SOUND_EVENTS.register(name, () -> new SoundEvent(new ResourceLocation(NicodesUtils.MOD_ID,name)));
     }
