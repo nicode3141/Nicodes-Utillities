@@ -2,6 +2,7 @@ package de.nicode3141.nicodesutils.events;
 
 import de.nicode3141.nicodesutils.NicodesUtils;
 import de.nicode3141.nicodesutils.entity.ModEntityTypes;
+import de.nicode3141.nicodesutils.entity.custom.ExtremeCreeperEntity;
 import de.nicode3141.nicodesutils.entity.custom.ModVillager;
 import de.nicode3141.nicodesutils.entity.custom.RGBSheepEntity;
 import de.nicode3141.nicodesutils.item.custom.ModSpawnEggItem;
@@ -18,6 +19,7 @@ public class ModEventBusEvents {
     @SubscribeEvent
     public static void addEntityAttributes(EntityAttributeCreationEvent event) {
         event.put(ModEntityTypes.BRP_SHEEP.get(), RGBSheepEntity.setCustomAttributes().create());
+        event.put(ModEntityTypes.EXTREME_CREEPER.get(), ExtremeCreeperEntity.setCustomAttributes().create());
     }
 
     @SubscribeEvent

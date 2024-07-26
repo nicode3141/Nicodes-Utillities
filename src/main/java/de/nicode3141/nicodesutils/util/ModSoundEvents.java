@@ -25,6 +25,9 @@ public class ModSoundEvents {
     public static final RegistryObject<SoundEvent> EXTREME_EXPLOSION =
             registerSoundEvent("extreme-explosion");
 
+    public static final RegistryObject<SoundEvent> DONT_WORRY =
+            registerSoundEvent("dont-worry");
+
     private static RegistryObject<SoundEvent> registerSoundEvent(String name){
         return SOUND_EVENTS.register(name, () -> new SoundEvent(new ResourceLocation(NicodesUtils.MOD_ID,name)));
     }

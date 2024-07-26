@@ -18,6 +18,7 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.util.ITeleporter;
 
 import javax.annotation.Nullable;
+import javax.sql.rowset.spi.SyncResolver;
 
 public class BrpTeleporter extends HorizontalBlock {
     public BrpTeleporter(Properties builder) {
@@ -44,19 +45,23 @@ public class BrpTeleporter extends HorizontalBlock {
     @Override
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos,
                                              PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+        System.out.println("CLICK RECOGNISED!");
         if (!worldIn.isRemote()) {
             if (!player.isCrouching()) {
                 MinecraftServer server = worldIn.getServer();
 
                 if (server != null) {
                     if (worldIn.getDimensionKey() == ModDimensions.BRPDim) {
+                        System.out.println("to Overworld!");
                         ServerWorld overWorld = server.getWorld(World.OVERWORLD);
                         if (overWorld != null) {
                            player.changeDimension(overWorld, (ITeleporter) new RgbTeleporter(pos, false));
                         }
                     } else {
+                        System.out.println("to brpDIM!");
                         ServerWorld brpdim = server.getWorld(ModDimensions.BRPDim);
                         if (brpdim != null) {
+                            System.out.println("brpDIM EXSISTS!");
                           player.changeDimension(brpdim, (ITeleporter) new RgbTeleporter(pos, true));
                         }
                     }

@@ -14,5 +14,13 @@
         "stream": true
       }
     ]
+  },
+  "dont-worry": {
+    "sounds": [
+      {
+        "name": "nicodesutils:dont-worry",
+        "stream": true
+      }
+    ]
   }
 }

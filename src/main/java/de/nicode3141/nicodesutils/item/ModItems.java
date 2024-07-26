@@ -44,7 +44,7 @@ public class ModItems {
 
     //Registers the Item "COLA"
     public static final RegistryObject<Item> COLA = ITEMS.register("cola",
-            () -> new HoneyBottleItem(new Item.Properties().group(ModItemGroup.NICODESUTILS_GROUP)));
+            () -> new Item(new Item.Properties().group(ModItemGroup.NICODESUTILS_GROUP).food(ModFood.Cola)));
 
     //Registers the Item "brp orb"
     public static final RegistryObject<Item> BRP_ORB = ITEMS.register("brp_orb",

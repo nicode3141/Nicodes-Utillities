@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "X#X",
+    "#X#",
+    "X#X"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:end_crystal"
+    },
+    "X": {
+      "item": "minecraft:tnt"
+    }
+  },
+  "result": {
+    "item": "nicodesutils:extreme_tnt"
+  }
+}

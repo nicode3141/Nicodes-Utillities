@@ -19,6 +19,13 @@ public class ModConfiguredSurfaceBuilders {
                     Blocks.DIRT.getDefaultState()
             )));
 
+    public static ConfiguredSurfaceBuilder<?> BRP_SURFACE = register("brp_surface",
+            SurfaceBuilder.DEFAULT.func_242929_a(new SurfaceBuilderConfig(
+                    ModBlocks.BRP_GRASS_BLOCK.get().getDefaultState(),
+                    ModBlocks.BRP_DIRT.get().getDefaultState(),
+                    Blocks.DIRT.getDefaultState()
+            )));
+
 
     private static <SC extends ISurfaceBuilderConfig>ConfiguredSurfaceBuilder<SC> register(String name,
                                                                                            ConfiguredSurfaceBuilder<SC> csb){

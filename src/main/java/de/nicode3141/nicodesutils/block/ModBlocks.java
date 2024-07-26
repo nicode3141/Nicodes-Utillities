@@ -61,12 +61,6 @@ public class ModBlocks {
                                 .harvestLevel(1).harvestTool(ToolType.SHOVEL).setRequiresTool().hardnessAndResistance(1f).sound(SoundType.PLANT)));
 
                 //creates the Block "Compressed Bitcoin"
-                public static final RegistryObject<Block> NICODIUM_ORE = registerBlock("nicodium_ore",
-                        () -> new Block(AbstractBlock.Properties.create(Material.ROCK)
-                                .harvestLevel(4).harvestTool(ToolType.PICKAXE).setRequiresTool().hardnessAndResistance(4f)));
-
-
-                //creates the Block "Compressed Bitcoin"
                 public static final RegistryObject<Block> NICODE_BLOCK = registerBlock("nicode_block",
                         () -> new NicodeBlock(AbstractBlock.Properties.create(Material.SAND)
                                 .notSolid()));
@@ -84,6 +78,10 @@ public class ModBlocks {
         public static final RegistryObject<Block> COBALT_ORE = registerBlock("cobalt_ore",
                 () -> new Block(AbstractBlock.Properties.create(Material.ROCK)
                         .harvestLevel(4).harvestTool(ToolType.PICKAXE).setRequiresTool().hardnessAndResistance(4f).notSolid()));
+
+    public static final RegistryObject<Block> NICODIUM_ORE = registerBlock("nicodium_ore",
+            () -> new Block(AbstractBlock.Properties.create(Material.ROCK)
+                    .harvestLevel(4).harvestTool(ToolType.PICKAXE).setRequiresTool().hardnessAndResistance(4f)));
 
         public static final RegistryObject<Block> NICKEL_BLOCK = registerBlock("nickel_block",
                 () -> new Block(AbstractBlock.Properties.create(Material.ROCK)
@@ -118,8 +116,8 @@ public class ModBlocks {
 
 
     public static final RegistryObject<Block> EXTREME_TNT = registerBlock("extreme_tnt",
-            () -> new ExtremeTNTBlock(AbstractBlock.Properties.create(Material.SAND)
-                    .notSolid()));
+            () -> new ExtremeTNTBlock(AbstractBlock.Properties.create(Material.SAND).sound(SoundType.PLANT)
+                    .harvestLevel(1).hardnessAndResistance(1f).notSolid()));
 
 
 

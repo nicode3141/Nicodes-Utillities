@@ -8,7 +8,8 @@ public enum OreType {
 
     NICKEL(Lazy.of(ModBlocks.NICKEL_ORE),8,25,50,2),
     LANATHANUM(Lazy.of(ModBlocks.LANATHANUM_ORE),2,5,20,1),
-    COBALT(Lazy.of(ModBlocks.COBALT_ORE),6,12,33,1);
+    COBALT(Lazy.of(ModBlocks.COBALT_ORE),6,12,33,1),
+    NICODIUM(Lazy.of(ModBlocks.NICODIUM_ORE), 4, 4, 20, 3);
 
 
     private final Lazy<Block> block;

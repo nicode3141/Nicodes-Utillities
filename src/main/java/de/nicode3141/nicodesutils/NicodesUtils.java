@@ -21,6 +21,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
+import net.minecraft.client.renderer.entity.CreeperRenderer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -105,6 +106,7 @@ public class NicodesUtils
         });
         RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.BRP_SHEEP.get(), RGBSheepRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.EXTREME_TNT.get(), ExtremeTNTRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.EXTREME_CREEPER.get(), CreeperRenderer::new);
         ModItemModelProperties.makeBow(ModItems.BRPBOW.get());
     }
 

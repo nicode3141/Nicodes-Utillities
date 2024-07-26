@@ -26,6 +26,8 @@ public class RgbTeleporter implements ITeleporter {
         entity = repositionEntity.apply(false);
         double y = 61;
 
+        System.out.println("from Teleporter Class!");
+
         if (!insideDimension) {
             y = thisPos.getY();
         }
