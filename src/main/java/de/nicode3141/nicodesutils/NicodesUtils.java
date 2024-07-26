@@ -5,6 +5,7 @@ import de.nicode3141.nicodesutils.container.ModContainers;
 import de.nicode3141.nicodesutils.entity.ModEntityTypes;
 import de.nicode3141.nicodesutils.entity.custom.ExtremeTNTEntity;
 import de.nicode3141.nicodesutils.entity.custom.ModVillager;
+import de.nicode3141.nicodesutils.entity.render.ExtremeCreeperRenderer;
 import de.nicode3141.nicodesutils.entity.render.ExtremeTNTRenderer;
 import de.nicode3141.nicodesutils.entity.render.RGBSheepRenderer;
 import de.nicode3141.nicodesutils.item.ModItems;
@@ -106,7 +107,7 @@ public class NicodesUtils
         });
         RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.BRP_SHEEP.get(), RGBSheepRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.EXTREME_TNT.get(), ExtremeTNTRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.EXTREME_CREEPER.get(), CreeperRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.EXTREME_CREEPER.get(), ExtremeCreeperRenderer::new);
         ModItemModelProperties.makeBow(ModItems.BRPBOW.get());
     }
 
