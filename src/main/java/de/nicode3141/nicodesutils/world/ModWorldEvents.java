@@ -2,6 +2,7 @@ package de.nicode3141.nicodesutils.world;
 
 import com.mojang.serialization.Codec;
 import de.nicode3141.nicodesutils.NicodesUtils;
+import de.nicode3141.nicodesutils.world.gen.ModEntityGeneration;
 import de.nicode3141.nicodesutils.world.gen.ModOreGeneration;
 import de.nicode3141.nicodesutils.world.gen.ModStructureGeneration;
 import de.nicode3141.nicodesutils.world.structure.ModStructures;
@@ -33,6 +34,7 @@ public class ModWorldEvents {
         ModOreGeneration.generateOres(event);
         ModStructureGeneration.generateStructures(event);
 
+        ModEntityGeneration.onEntitySpawn(event);
 
     }
 

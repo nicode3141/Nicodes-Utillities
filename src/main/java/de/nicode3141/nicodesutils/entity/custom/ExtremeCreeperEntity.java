@@ -153,6 +153,11 @@ public class ExtremeCreeperEntity extends MonsterEntity {
 
                     if(!isSoundPlaying && !exploded){
                         for(PlayerEntity player : players){
+                            if(player.getDistance(this) > 15){
+                                this.attemptTeleport(player.getPosX() -1, player.getPosY() -1, player.getPosZ(), true);
+                                this.playSound(SoundEvents.ENTITY_ENDERMAN_TELEPORT, 1.0F, 1.0F);
+                            }
+
                             player.playSound(ModSoundEvents.DONT_WORRY.get(), SoundCategory.HOSTILE, 1.0F, 1.0F);
                             isSoundPlaying = true;
                         }

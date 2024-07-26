@@ -28,7 +28,7 @@ public class ModEntityTypes {
 
     public static final RegistryObject<EntityType<ExtremeCreeperEntity>> EXTREME_CREEPER =
             ENITITY_TYPES.register("extreme_creeper", () -> EntityType.Builder.create(ExtremeCreeperEntity::new,
-                            EntityClassification.MISC).immuneToFire().size(1.0f, 1.0f)
+                            EntityClassification.MONSTER).immuneToFire().size(1.0f, 1.0f)
                     .build(new ResourceLocation(NicodesUtils.MOD_ID, "extreme_creeper").toString()));
 
     public static void register(IEventBus eventBus) {

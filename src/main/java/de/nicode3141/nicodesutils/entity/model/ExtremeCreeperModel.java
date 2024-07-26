@@ -1,82 +1,64 @@
 package de.nicode3141.nicodesutils.entity.model;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
-import de.nicode3141.nicodesutils.entity.custom.ExtremeCreeperEntity;
-import net.minecraft.client.renderer.entity.model.EntityModel;
+import com.google.common.collect.ImmutableList;
+import net.minecraft.client.renderer.entity.model.SegmentedModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 
-public class ExtremeCreeperModel <T extends ExtremeCreeperEntity> extends EntityModel<T> {
+public class ExtremeCreeperModel <T extends Entity> extends SegmentedModel<T> {
 
-    private final ModelRenderer sheep;
-    private final ModelRenderer body;
-    private final ModelRenderer legs;
-    private final ModelRenderer upper;
-    private final ModelRenderer lower;
     private final ModelRenderer head;
-    private final ModelRenderer face;
-    private final ModelRenderer main;
+    private final ModelRenderer creeperArmor;
+    private final ModelRenderer body;
+    private final ModelRenderer leg1;
+    private final ModelRenderer leg2;
+    private final ModelRenderer leg3;
+    private final ModelRenderer leg4;
+
 
     public ExtremeCreeperModel() {
-        textureWidth = 16;
-        textureHeight = 16;
-
-        sheep = new ModelRenderer(this);
-        sheep.setRotationPoint(0.0F, 24.0F, 0.0F);
-
-
-        body = new ModelRenderer(this);
-        body.setRotationPoint(0.0F, 0.0F, 0.0F);
-        sheep.addChild(body);
-        body.setTextureOffset(0, 0).addBox(-8.0F, -28.0F, -11.0F, 16.0F, 13.0F, 23.0F, 0.0F, false);
-
-        legs = new ModelRenderer(this);
-        legs.setRotationPoint(0.0F, 0.0F, 0.0F);
-        sheep.addChild(legs);
-
-
-        upper = new ModelRenderer(this);
-        upper.setRotationPoint(0.0F, 0.0F, 0.0F);
-        legs.addChild(upper);
-        upper.setTextureOffset(0, 0).addBox(1.0F, -15.0F, -8.0F, 6.0F, 8.0F, 6.0F, 0.0F, false);
-        upper.setTextureOffset(0, 0).addBox(-7.0F, -15.0F, -8.0F, 6.0F, 8.0F, 6.0F, 0.0F, false);
-        upper.setTextureOffset(0, 0).addBox(-7.0F, -15.0F, 5.0F, 6.0F, 8.0F, 6.0F, 0.0F, false);
-        upper.setTextureOffset(0, 0).addBox(1.0F, -15.0F, 5.0F, 6.0F, 8.0F, 6.0F, 0.0F, false);
-
-        lower = new ModelRenderer(this);
-        lower.setRotationPoint(0.0F, 0.0F, 0.0F);
-        legs.addChild(lower);
-        lower.setTextureOffset(0, 0).addBox(2.0F, -8.0F, -7.0F, 4.0F, 8.0F, 4.0F, 0.0F, false);
-        lower.setTextureOffset(0, 0).addBox(-6.0F, -8.0F, -7.0F, 4.0F, 8.0F, 4.0F, 0.0F, false);
-        lower.setTextureOffset(0, 0).addBox(-6.0F, -8.0F, 6.0F, 4.0F, 8.0F, 4.0F, 0.0F, false);
-        lower.setTextureOffset(0, 0).addBox(2.0F, -8.0F, 6.0F, 4.0F, 8.0F, 4.0F, 0.0F, false);
-
-        head = new ModelRenderer(this);
-        head.setRotationPoint(0.0F, 0.0F, 0.0F);
-        sheep.addChild(head);
-
-
-        face = new ModelRenderer(this);
-        face.setRotationPoint(0.0F, 0.0F, 0.0F);
-        head.addChild(face);
-        face.setTextureOffset(0, 0).addBox(-5.0F, -32.0F, -18.0F, 10.0F, 9.0F, 2.0F, 0.0F, false);
-
-        main = new ModelRenderer(this);
-        main.setRotationPoint(0.0F, 0.0F, 0.0F);
-        head.addChild(main);
-        main.setTextureOffset(0, 0).addBox(-6.0F, -33.0F, -16.0F, 12.0F, 11.0F, 12.0F, 0.0F, false);
+        this(0.0F);
+    }
+    public ExtremeCreeperModel(float p_i46366_1_) {
+        int i = 6;
+        this.head = new ModelRenderer(this, 0, 0);
+        this.head.addBox(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, p_i46366_1_);
+        this.head.setRotationPoint(0.0F, 6.0F, 0.0F);
+        this.creeperArmor = new ModelRenderer(this, 32, 0);
+        this.creeperArmor.addBox(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, p_i46366_1_ + 0.5F);
+        this.creeperArmor.setRotationPoint(0.0F, 6.0F, 0.0F);
+        this.body = new ModelRenderer(this, 16, 16);
+        this.body.addBox(-4.0F, 0.0F, -2.0F, 8.0F, 12.0F, 4.0F, p_i46366_1_);
+        this.body.setRotationPoint(0.0F, 6.0F, 0.0F);
+        this.leg1 = new ModelRenderer(this, 0, 16);
+        this.leg1.addBox(-2.0F, 0.0F, -2.0F, 4.0F, 6.0F, 4.0F, p_i46366_1_);
+        this.leg1.setRotationPoint(-2.0F, 18.0F, 4.0F);
+        this.leg2 = new ModelRenderer(this, 0, 16);
+        this.leg2.addBox(-2.0F, 0.0F, -2.0F, 4.0F, 6.0F, 4.0F, p_i46366_1_);
+        this.leg2.setRotationPoint(2.0F, 18.0F, 4.0F);
+        this.leg3 = new ModelRenderer(this, 0, 16);
+        this.leg3.addBox(-2.0F, 0.0F, -2.0F, 4.0F, 6.0F, 4.0F, p_i46366_1_);
+        this.leg3.setRotationPoint(-2.0F, 18.0F, -4.0F);
+        this.leg4 = new ModelRenderer(this, 0, 16);
+        this.leg4.addBox(-2.0F, 0.0F, -2.0F, 4.0F, 6.0F, 4.0F, p_i46366_1_);
+        this.leg4.setRotationPoint(2.0F, 18.0F, -4.0F);
     }
 
-    @Override
-    public void render(MatrixStack matrixStackIn, IVertexBuilder bufferIn, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha) {
-        sheep.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
+
+    public Iterable<ModelRenderer> getParts() {
+        return ImmutableList.of(this.head, this.body, this.leg1, this.leg2, this.leg3, this.leg4);
     }
 
-    @Override
+    /**
+     * Sets this entity's model rotation angles
+     */
     public void setRotationAngles(T entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-        this.head.rotateAngleY = headPitch * ((float) Math.PI / 180F);
-        this.legs.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F * (float) Math.PI) *1.4F * limbSwingAmount;
+        this.head.rotateAngleY = netHeadYaw * ((float)Math.PI / 180F);
+        this.head.rotateAngleX = headPitch * ((float)Math.PI / 180F);
+        this.leg1.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
+        this.leg2.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
+        this.leg3.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
+        this.leg4.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
     }
 }
