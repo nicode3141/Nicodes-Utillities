@@ -18,8 +18,9 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.antlr.v4.runtime.misc.NotNull;
+
+import javax.annotation.Nullable;
 
 public class CustomTNTBlock extends TntBlock {
     public CustomTNTBlock(Properties pProperties) {
@@ -65,7 +66,7 @@ public class CustomTNTBlock extends TntBlock {
         PrimedTnt tnt = EntityCustomTNT.create(world, pos.getX() + 0.5F, pos.getY(), pos.getZ() + 0.5F, igniter);
         if (tnt != null) {
             world.addFreshEntity(tnt);
-            world.playSound(null, tnt.getX(), tnt.getY(), tnt.getZ(), SoundEvents.TNT_PRIMED, SoundSource.BLOCKS, 1.0F, 1.0F);
+            world.playSound(null, tnt.getX(), tnt.getY(), tnt.getZ(), SoundEvents.TNT_PRIMED, SoundSource.BLOCKS, 2.0F, 1.0F);
             return true;
         }
         return false;
